@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blood Stock — Life Pulse</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg lp-navbar sticky-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="../index.html">
+      <div class="brand-icon"><i class="bi bi-heart-pulse-fill"></i></div>
+      <span class="brand-name">Life<span class="brand-accent">Pulse</span></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-center gap-1">
+        <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link active" href="blood-stock.html">Blood Stock</a></li>
+        <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
+        <li class="nav-item"><a class="nav-link" href="request.html">Request</a></li>
+        <li class="nav-item"><a class="nav-link" href="hospitals.html">Hospitals</a></li>
+        <li class="nav-item"><a class="nav-link" href="camps.html">Camps</a></li>
+        <li class="nav-item"><a class="nav-link emergency-link" href="emergency.html"><i class="bi bi-exclamation-triangle-fill me-1"></i>Emergency</a></li>
+        <li class="nav-item">
+          <button class="btn btn-sm btn-outline-secondary ms-2" id="darkToggle"><i class="bi bi-moon-fill"></i></button>
+        </li>
+        <li class="nav-item ms-2"><a class="btn lp-btn-primary" href="donate.html">Donate Now</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="container">
+    <h1><i class="bi bi-droplet-half me-3"></i>Blood Stock</h1>
+    <p>Real-time blood availability across all partner hospitals — updated every 30 minutes</p>
+  </div>
+</section>
+
+<!-- SEARCH & FILTER -->
+<section class="py-4" style="background:var(--lp-card); border-bottom:1px solid var(--lp-border);">
+  <div class="container">
+    <div class="row g-3 align-items-end">
+      <div class="col-md-4">
+        <label class="form-label">Search by Blood Group</label>
+        <select class="form-select" id="bloodGroupSearch">
+          <option value="all">All Blood Groups</option>
+          <option value="A+">A+</option>
+          <option value="A-">A-</option>
+          <option value="B+">B+</option>
+          <option value="B-">B-</option>
+          <option value="AB+">AB+</option>
+          <option value="AB-">AB-</option>
+          <option value="O+">O+</option>
+          <option value="O-">O-</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">City</label>
+        <select class="form-select" id="citySearch">
+          <option value="all">All Cities</option>
+          <option>Mumbai</option>
+          <option>Delhi</option>
+          <option>Bangalore</option>
+          <option>Ahmedabad</option>
+          <option>Chennai</option>
+          <option>Kolkata</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <button class="btn lp-btn-primary w-100" id="searchBloodBtn">
+          <i class="bi bi-search me-2"></i>Search Blood Stock
+        </button>
+      </div>
+    </div>
+    <div class="mt-3 d-flex flex-wrap gap-2">
+      <span class="fw-600 me-2" style="font-size:14px;color:var(--lp-text-muted)">Filter:</span>
+      <button class="btn btn-sm filter-btn active" data-filter="all">All</button>
+      <button class="btn btn-sm filter-btn" data-filter="available" style="background:#d5f5e3;color:#1e8449;border:none">Available</button>
+      <button class="btn btn-sm filter-btn" data-filter="low" style="background:#fef9e7;color:#b7770d;border:none">Low Stock</button>
+      <button class="btn btn-sm filter-btn" data-filter="critical" style="background:#fadbd8;color:#a93226;border:none">Critical</button>
+    </div>
+  </div>
+</section>
+
+<!-- STOCK DASHBOARD CARDS -->
+<section class="py-5" style="background:var(--lp-bg)">
+  <div class="container">
+    <div class="row g-4 mb-5">
+      <div class="col-6 col-lg-3">
+        <div class="stat-card">
+          <div class="stat-icon bg-green"><i class="bi bi-droplet-fill"></i></div>
+          <div class="stat-num">551</div>
+          <div class="stat-label">Total Units Available</div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="stat-card">
+          <div class="stat-icon bg-blue"><i class="bi bi-check-circle-fill"></i></div>
+          <div class="stat-num">5</div>
+          <div class="stat-label">Groups Adequate</div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="stat-card">
+          <div class="stat-icon bg-orange"><i class="bi bi-exclamation-circle-fill"></i></div>
+          <div class="stat-num">2</div>
+          <div class="stat-label">Low Stock Groups</div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="stat-card">
+          <div class="stat-icon bg-red"><i class="bi bi-x-circle-fill"></i></div>
+          <div class="stat-num">1</div>
+          <div class="stat-label">Critical Groups</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STOCK TABLE -->
+    <div class="form-card">
+      <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+        <h5 class="mb-0" style="font-family:'Playfair Display',serif">Current Blood Inventory</h5>
+        <span class="text-muted" style="font-size:13px"><i class="bi bi-clock me-1"></i>Last updated: Just now</span>
+      </div>
+      <div class="table-responsive">
+        <table class="stock-table">
+          <thead>
+            <tr>
+              <th>Blood Group</th>
+              <th>Available Units</th>
+              <th>Reserved Units</th>
+              <th>Total Capacity</th>
+              <th>Stock Level</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="stock-item" data-group="A+" data-status="available">
+              <td><strong class="text-red" style="font-family:'Playfair Display',serif;font-size:1.2rem">A+</strong></td>
+              <td>142</td><td>18</td><td>200</td>
+              <td><div class="stock-progress"><div class="stock-progress-fill fill-green" data-width="71" style="width:0%"></div></div></td>
+              <td><span class="blood-status status-high">Available</span></td>
+              <td><a href="request.html" class="btn btn-sm lp-btn-primary">Request</a></td>
+            </tr>
+            <tr class="stock-item" data-group="A-" data-status="low">
+              <td><strong class="text-red" style="font-family:'Playfair Display',serif;font-size:1.2rem">A-</strong></td>
+              <td>18</td><td>5</td><td>100</td>
+              <td><div class="stock-progress"><div class="stock-progress-fill fill-yellow" data-width="18" style="width:0%"></div></div></td>
+              <td><span class="blood-status status-low">Low</span></td>
+              <td><a href="request.html" class="btn btn-sm lp-btn-primary">Request</a></td>
+            </tr>
+            <tr class="stock-item" data-group="B+" data-status="available">
+              <td><strong class="text-red" style="font-family:'Playfair Display',serif;font-size:1.2rem">B+</strong></td>
+              <td>98</td><td>12</td><td>150</td>
+              <td><div class="stock-progress"><div class="stock-progress-fill fill-green" data-width="65" style="width:0%"></div></div></td>
+              <td><span class="blood-status status-high">Available</span></td>
+              <td><a href="request.html" class="btn btn-sm lp-btn-primary">Request</a></td>
+            </tr>
+            <tr class="stock-item" data-group="B-" data-status="critical">
+              <td><strong class="text-red" style="font-family:'Playfair Display',serif;font-size:1.2rem">B-</strong></td>
+              <td>7</td><td>3</td><td>80</td>
+              <td><div class="stock-progress"><div class="stock-progress-fill fill-red" data-width="9" style="width:0%"></div></div></td>
+              <td><span class="blood-status status-critical">Critical</span></td>
+              <td><a href="request.html" class="btn btn-sm btn-danger text-white">Urgent</a></td>
+            </tr>
+            <tr class="stock-item" data-group="AB+" data-status="available">
+              <td><strong class="text-red" style="font-family:'Playfair Display',serif;font-size:1.2rem">AB+</strong></td>
+              <td>64</td><td>8</td><td>100</td>
+              <td><div class="stock-progress"><div class="stock-progress-fill fill-green" data-width="64" style="width:0%"></div></div></td>
+              <td><span class="blood-status status-high">Available</span></td>
+              <td><a href="request.html" class="btn btn-sm lp-btn-primary">Request</a></td>
+            </tr>
+            <tr class="stock-item" data-group="AB-" data-status="low">
+              <td><strong class="text-red" style="font-family:'Playfair Display',serif;font-size:1.2rem">AB-</strong></td>
+              <td>12</td><td>2</td><td>60</td>
+              <td><div class="stock-progress"><div class="stock-progress-fill fill-yellow" data-width="20" style="width:0%"></div></div></td>
+              <td><span class="blood-status status-low">Low</span></td>
+              <td><a href="request.html" class="btn btn-sm lp-btn-primary">Request</a></td>
+            </tr>
+            <tr class="stock-item" data-group="O+" data-status="available">
+              <td><strong class="text-red" style="font-family:'Playfair Display',serif;font-size:1.2rem">O+</strong></td>
+              <td>210</td><td>28</td><td>300</td>
+              <td><div class="stock-progress"><div class="stock-progress-fill fill-green" data-width="70" style="width:0%"></div></div></td>
+              <td><span class="blood-status status-high">Available</span></td>
+              <td><a href="request.html" class="btn btn-sm lp-btn-primary">Request</a></td>
+            </tr>
+            <tr class="stock-item" data-group="O-" data-status="critical">
+              <td><strong class="text-red" style="font-family:'Playfair Display',serif;font-size:1.2rem">O-</strong></td>
+              <td>5</td><td>2</td><td>120</td>
+              <td><div class="stock-progress"><div class="stock-progress-fill fill-red" data-width="4" style="width:0%"></div></div></td>
+              <td><span class="blood-status status-critical">Critical</span></td>
+              <td><a href="emergency.html" class="btn btn-sm btn-danger text-white">SOS</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="lp-footer py-3 text-center">
+  <p class="mb-0" style="color:rgba(255,255,255,0.4);font-size:13px">&copy; 2025 Life Pulse — Every Drop Matters</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>
