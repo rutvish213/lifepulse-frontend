@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Life Pulse - Every Drop, Every Beat, Every Life</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg lp-navbar sticky-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+      <div class="brand-icon"><i class="bi bi-heart-pulse-fill"></i></div>
+      <span class="brand-name">Life<span class="brand-accent">Pulse</span></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-center gap-1">
+        <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="pages/blood-stock.html">Blood Stock</a></li>
+        <li class="nav-item"><a class="nav-link" href="pages/donate.html">Donate</a></li>
+        <li class="nav-item"><a class="nav-link" href="pages/request.html">Request</a></li>
+        <li class="nav-item"><a class="nav-link" href="pages/hospitals.html">Hospitals</a></li>
+        <li class="nav-item"><a class="nav-link" href="pages/camps.html">Camps</a></li>
+        <li class="nav-item"><a class="nav-link emergency-link" href="pages/emergency.html"><i class="bi bi-exclamation-triangle-fill me-1"></i>Emergency</a></li>
+        <li class="nav-item"><a class="nav-link" href="pages/contact.html">Contact</a></li>
+        <li class="nav-item">
+          <button class="btn btn-sm btn-outline-secondary ms-2" id="darkToggle" title="Toggle Dark Mode">
+            <i class="bi bi-moon-fill"></i>
+          </button>
+        </li>
+        <li class="nav-item ms-2"><a class="btn lp-btn-outline" href="pages/login.html">Login</a></li>
+        <li class="nav-item ms-1"><a class="btn lp-btn-primary" href="pages/donate.html">Donate Now</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="hero-section">
+  <div class="hero-bg-overlay"></div>
+  <div class="hero-particles" id="particles"></div>
+  <div class="container hero-content">
+    <div class="row align-items-center min-vh-100 py-5">
+      <div class="col-lg-6" data-aos="fade-right">
+        <div class="hero-badge mb-3"><i class="bi bi-heart-pulse-fill me-2"></i>Trusted Blood Bank Network</div>
+        <h1 class="hero-title">Save Lives <br/><span class="hero-accent">One Drop</span><br/>at a Time</h1>
+        <p class="hero-tagline">Every Drop, Every Beat, Every Life</p>
+        <p class="hero-desc">Join India's most trusted blood bank management platform. Connect donors, hospitals and patients — faster than ever before.</p>
+        <div class="hero-actions d-flex flex-wrap gap-3 mt-4">
+          <a href="pages/donate.html" class="btn lp-btn-hero-primary"><i class="bi bi-droplet-fill me-2"></i>Donate Blood</a>
+          <a href="pages/request.html" class="btn lp-btn-hero-outline"><i class="bi bi-hand-thumbs-up-fill me-2"></i>Request Blood</a>
+          <a href="pages/hospitals.html" class="btn lp-btn-hero-ghost"><i class="bi bi-hospital-fill me-2"></i>Find Hospital</a>
+        </div>
+        <div class="hero-trust mt-5 d-flex flex-wrap gap-4">
+          <div class="trust-item"><i class="bi bi-shield-check-fill text-success me-1"></i><span>WHO Certified</span></div>
+          <div class="trust-item"><i class="bi bi-lock-fill text-success me-1"></i><span>Secure & Encrypted</span></div>
+          <div class="trust-item"><i class="bi bi-telephone-fill text-success me-1"></i><span>24/7 Support</span></div>
+        </div>
+      </div>
+      <div class="col-lg-6 d-none d-lg-flex justify-content-center" data-aos="fade-left">
+        <div class="hero-visual">
+          <div class="hero-pulse-ring"></div>
+          <div class="hero-pulse-ring delay-1"></div>
+          <div class="hero-center-icon"><i class="bi bi-heart-pulse-fill"></i></div>
+          <div class="hero-float-card card-1"><i class="bi bi-droplet-fill"></i><span>A+ Available</span></div>
+          <div class="hero-float-card card-2"><i class="bi bi-person-check-fill"></i><span>12,400 Donors</span></div>
+          <div class="hero-float-card card-3"><i class="bi bi-hospital-fill"></i><span>180 Hospitals</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-wave">
+    <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg"><path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--lp-bg)"/></svg>
+  </div>
+</section>
+
+<!-- STATS SECTION -->
+<section class="stats-section py-5">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
+        <div class="stat-card">
+          <div class="stat-icon bg-red"><i class="bi bi-people-fill"></i></div>
+          <div class="stat-num" data-count="12400">0</div>
+          <div class="stat-label">Total Donors</div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="100">
+        <div class="stat-card">
+          <div class="stat-icon bg-blue"><i class="bi bi-droplet-half"></i></div>
+          <div class="stat-num" data-count="8750">0</div>
+          <div class="stat-label">Blood Units Available</div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="200">
+        <div class="stat-card">
+          <div class="stat-icon bg-green"><i class="bi bi-hospital-fill"></i></div>
+          <div class="stat-num" data-count="180">0</div>
+          <div class="stat-label">Partner Hospitals</div>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="300">
+        <div class="stat-card">
+          <div class="stat-icon bg-orange"><i class="bi bi-calendar-event-fill"></i></div>
+          <div class="stat-num" data-count="342">0</div>
+          <div class="stat-label">Donation Camps</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOOD STOCK QUICK VIEW -->
+<section class="py-5 blood-stock-preview">
+  <div class="container">
+    <div class="section-header text-center mb-5">
+      <span class="section-badge">Live Stock</span>
+      <h2 class="section-title">Real-Time Blood Availability</h2>
+      <p class="section-sub">Updated every 30 minutes from our partner hospitals</p>
+    </div>
+    <div class="row g-3 justify-content-center">
+      <div class="col-6 col-sm-4 col-md-3 col-lg-auto" data-aos="zoom-in" data-aos-delay="0">
+        <div class="blood-group-card available">
+          <div class="blood-type">A<sup>+</sup></div>
+          <div class="blood-units">142 units</div>
+          <div class="blood-status status-high">Available</div>
+        </div>
+      </div>
+      <div class="col-6 col-sm-4 col-md-3 col-lg-auto" data-aos="zoom-in" data-aos-delay="50">
+        <div class="blood-group-card low">
+          <div class="blood-type">A<sup>-</sup></div>
+          <div class="blood-units">18 units</div>
+          <div class="blood-status status-low">Low</div>
+        </div>
+      </div>
+      <div class="col-6 col-sm-4 col-md-3 col-lg-auto" data-aos="zoom-in" data-aos-delay="100">
+        <div class="blood-group-card available">
+          <div class="blood-type">B<sup>+</sup></div>
+          <div class="blood-units">98 units</div>
+          <div class="blood-status status-high">Available</div>
+        </div>
+      </div>
+      <div class="col-6 col-sm-4 col-md-3 col-lg-auto" data-aos="zoom-in" data-aos-delay="150">
+        <div class="blood-group-card critical">
+          <div class="blood-type">B<sup>-</sup></div>
+          <div class="blood-units">7 units</div>
+          <div class="blood-status status-critical">Critical</div>
+        </div>
+      </div>
+      <div class="col-6 col-sm-4 col-md-3 col-lg-auto" data-aos="zoom-in" data-aos-delay="200">
+        <div class="blood-group-card available">
+          <div class="blood-type">AB<sup>+</sup></div>
+          <div class="blood-units">64 units</div>
+          <div class="blood-status status-high">Available</div>
+        </div>
+      </div>
+      <div class="col-6 col-sm-4 col-md-3 col-lg-auto" data-aos="zoom-in" data-aos-delay="250">
+        <div class="blood-group-card low">
+          <div class="blood-type">AB<sup>-</sup></div>
+          <div class="blood-units">12 units</div>
+          <div class="blood-status status-low">Low</div>
+        </div>
+      </div>
+      <div class="col-6 col-sm-4 col-md-3 col-lg-auto" data-aos="zoom-in" data-aos-delay="300">
+        <div class="blood-group-card available">
+          <div class="blood-type">O<sup>+</sup></div>
+          <div class="blood-units">210 units</div>
+          <div class="blood-status status-high">Available</div>
+        </div>
+      </div>
+      <div class="col-6 col-sm-4 col-md-3 col-lg-auto" data-aos="zoom-in" data-aos-delay="350">
+        <div class="blood-group-card critical">
+          <div class="blood-type">O<sup>-</sup></div>
+          <div class="blood-units">5 units</div>
+          <div class="blood-status status-critical">Critical</div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <a href="pages/blood-stock.html" class="btn lp-btn-primary">View Full Stock Details <i class="bi bi-arrow-right ms-2"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT HELPS -->
+<section class="py-5 how-section">
+  <div class="container">
+    <div class="section-header text-center mb-5">
+      <span class="section-badge">How It Works</span>
+      <h2 class="section-title">How Life Pulse Helps</h2>
+      <p class="section-sub">A complete ecosystem connecting donors, patients and hospitals</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="0">
+        <div class="help-card">
+          <div class="help-icon red"><i class="bi bi-person-heart"></i></div>
+          <h5>Find Blood Donors</h5>
+          <p>Instantly locate verified donors nearby based on blood group, location and availability in real time.</p>
+          <a href="pages/donate.html" class="help-link">Explore <i class="bi bi-arrow-right"></i></a>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="80">
+        <div class="help-card">
+          <div class="help-icon blue"><i class="bi bi-droplet-half"></i></div>
+          <h5>Check Blood Stock</h5>
+          <p>Live dashboard showing blood availability across all partner hospitals and blood banks in your city.</p>
+          <a href="pages/blood-stock.html" class="help-link">Explore <i class="bi bi-arrow-right"></i></a>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="160">
+        <div class="help-card">
+          <div class="help-icon green"><i class="bi bi-hospital-fill"></i></div>
+          <h5>Locate Hospitals</h5>
+          <p>Find partner hospitals with blood bank facilities near you with maps, contact info and blood availability.</p>
+          <a href="pages/hospitals.html" class="help-link">Explore <i class="bi bi-arrow-right"></i></a>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="240">
+        <div class="help-card">
+          <div class="help-icon orange"><i class="bi bi-calendar-check-fill"></i></div>
+          <h5>Discover Camps</h5>
+          <p>Stay updated on blood donation drives and camps near you. Register with one click and save lives.</p>
+          <a href="pages/camps.html" class="help-link">Explore <i class="bi bi-arrow-right"></i></a>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="320">
+        <div class="help-card">
+          <div class="help-icon purple"><i class="bi bi-exclamation-triangle-fill"></i></div>
+          <h5>Emergency Assistance</h5>
+          <p>SOS button for critical situations — instantly alerts nearby donors and hospitals with your requirements.</p>
+          <a href="pages/emergency.html" class="help-link">Explore <i class="bi bi-arrow-right"></i></a>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="400">
+        <div class="help-card">
+          <div class="help-icon teal"><i class="bi bi-shield-lock-fill"></i></div>
+          <h5>Safe & Secure</h5>
+          <p>JWT-based authentication, end-to-end encryption and OTP verification keep your data always protected.</p>
+          <a href="pages/security.html" class="help-link">Explore <i class="bi bi-arrow-right"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+<section class="why-section py-5">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-5" data-aos="fade-right">
+        <span class="section-badge">Why Life Pulse</span>
+        <h2 class="section-title mt-2">Why Choose Life Pulse?</h2>
+        <p class="text-muted mb-4">We're not just a blood bank — we're a life-saving ecosystem trusted by thousands of donors and hospitals across India.</p>
+        <div class="why-list">
+          <div class="why-item"><i class="bi bi-check-circle-fill text-success"></i><span>Real-time blood availability across 180+ hospitals</span></div>
+          <div class="why-item"><i class="bi bi-check-circle-fill text-success"></i><span>Verified donors with complete health records</span></div>
+          <div class="why-item"><i class="bi bi-check-circle-fill text-success"></i><span>Emergency SOS alerts within 3 minutes</span></div>
+          <div class="why-item"><i class="bi bi-check-circle-fill text-success"></i><span>WHO certified and government recognized</span></div>
+          <div class="why-item"><i class="bi bi-check-circle-fill text-success"></i><span>Free for all donors and patients, always</span></div>
+          <div class="why-item"><i class="bi bi-check-circle-fill text-success"></i><span>24/7 helpline with trained medical staff</span></div>
+        </div>
+      </div>
+      <div class="col-lg-7" data-aos="fade-left">
+        <div class="why-cards row g-3">
+          <div class="col-6">
+            <div class="why-feature-card">
+              <i class="bi bi-lightning-charge-fill"></i>
+              <h6>Instant Matching</h6>
+              <p>AI-powered donor-patient matching in under 60 seconds</p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="why-feature-card accent">
+              <i class="bi bi-geo-alt-fill"></i>
+              <h6>Location Smart</h6>
+              <p>GPS-based nearest donor and hospital discovery</p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="why-feature-card accent">
+              <i class="bi bi-bell-fill"></i>
+              <h6>Smart Alerts</h6>
+              <p>SMS and email notifications for blood availability updates</p>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="why-feature-card">
+              <i class="bi bi-bar-chart-fill"></i>
+              <h6>Analytics</h6>
+              <p>Detailed dashboards for hospitals and administrators</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section py-5">
+  <div class="container">
+    <div class="section-header text-center mb-5">
+      <span class="section-badge">Stories</span>
+      <h2 class="section-title">Lives Saved, Stories Shared</h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+        <div class="testimonial-card">
+          <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p>"Life Pulse found a B- donor for my father within 20 minutes during a critical surgery. This platform literally saved his life."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar bg-red-light">RS</div>
+            <div><strong>Rajesh Sharma</strong><br/><small class="text-muted">Patient Family, Mumbai</small></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="testimonial-card featured">
+          <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p>"I've donated blood 8 times through Life Pulse. The process is seamless and I get notified whenever my blood type is urgently needed."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar bg-blue-light">PK</div>
+            <div><strong>Priya Krishnan</strong><br/><small class="text-muted">Regular Donor, Bangalore</small></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="testimonial-card">
+          <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p>"Our hospital's blood shortage reduced by 60% since partnering with Life Pulse. The dashboard is excellent for managing stock."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar bg-green-light">DM</div>
+            <div><strong>Dr. Mehta</strong><br/><small class="text-muted">Chief Medical Officer, Delhi</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA SECTION -->
+<section class="cta-section py-5">
+  <div class="container">
+    <div class="cta-card text-center" data-aos="zoom-in">
+      <div class="cta-icon"><i class="bi bi-heart-pulse-fill"></i></div>
+      <h2>Be a Hero Today</h2>
+      <p>One unit of blood can save up to 3 lives. Register as a donor and be part of India's largest blood donation network.</p>
+      <div class="d-flex justify-content-center flex-wrap gap-3 mt-4">
+        <a href="pages/donate.html" class="btn lp-btn-hero-primary btn-lg"><i class="bi bi-droplet-fill me-2"></i>Register as Donor</a>
+        <a href="pages/request.html" class="btn lp-btn-hero-outline btn-lg"><i class="bi bi-clipboard2-pulse-fill me-2"></i>Request Blood Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="lp-footer pt-5 pb-3">
+  <div class="container">
+    <div class="row g-4 mb-4">
+      <div class="col-lg-4">
+        <div class="footer-brand d-flex align-items-center gap-2 mb-3">
+          <div class="brand-icon small"><i class="bi bi-heart-pulse-fill"></i></div>
+          <span class="brand-name">Life<span class="brand-accent">Pulse</span></span>
+        </div>
+        <p class="footer-desc">India's most trusted blood bank management platform. Connecting donors, patients, and hospitals to save lives — 24/7, 365 days.</p>
+        <div class="footer-social d-flex gap-3 mt-3">
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-twitter-x"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+          <a href="#"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-2">
+        <h6 class="footer-title">Quick Links</h6>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="pages/blood-stock.html">Blood Stock</a></li>
+          <li><a href="pages/donate.html">Donate Blood</a></li>
+          <li><a href="pages/request.html">Request Blood</a></li>
+          <li><a href="pages/emergency.html">Emergency</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-6 col-lg-2">
+        <h6 class="footer-title">Services</h6>
+        <ul class="footer-links">
+          <li><a href="pages/hospitals.html">Find Hospitals</a></li>
+          <li><a href="pages/camps.html">Blood Camps</a></li>
+          <li><a href="pages/security.html">Security</a></li>
+          <li><a href="pages/contact.html">Contact Us</a></li>
+          <li><a href="pages/login.html">Login / Register</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4">
+        <h6 class="footer-title">Emergency Helpline</h6>
+        <div class="footer-helpline">
+          <div class="helpline-item"><i class="bi bi-telephone-fill text-red"></i><span>+91 1800-LIFEPULSE (24/7)</span></div>
+          <div class="helpline-item"><i class="bi bi-envelope-fill text-red"></i><span>emergency@lifepulse.in</span></div>
+          <div class="helpline-item"><i class="bi bi-geo-alt-fill text-red"></i><span>Nationwide Coverage — All Major Cities</span></div>
+        </div>
+        <div class="footer-app mt-3">
+          <small class="text-muted">Available on</small>
+          <div class="d-flex gap-2 mt-1">
+            <span class="app-badge"><i class="bi bi-google-play me-1"></i>Google Play</span>
+            <span class="app-badge"><i class="bi bi-apple me-1"></i>App Store</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <hr class="footer-divider"/>
+    <div class="footer-bottom d-flex flex-wrap justify-content-between align-items-center gap-2">
+      <p class="mb-0 text-muted small">&copy; 2025 Life Pulse. All rights reserved. | Built with <i class="bi bi-heart-fill text-red"></i> to save lives.</p>
+      <div class="footer-badges d-flex gap-2">
+        <span class="footer-badge"><i class="bi bi-shield-check-fill me-1"></i>WHO Certified</span>
+        <span class="footer-badge"><i class="bi bi-lock-fill me-1"></i>HIPAA Compliant</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- NOTIFICATION TOAST -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index:9999">
+  <div id="liveToast" class="toast" role="alert">
+    <div class="toast-header bg-danger text-white">
+      <i class="bi bi-exclamation-circle-fill me-2"></i>
+      <strong class="me-auto">Life Pulse Alert</strong>
+      <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast"></button>
+    </div>
+    <div class="toast-body" id="toastMsg">O- blood urgently needed in Mumbai!</div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
