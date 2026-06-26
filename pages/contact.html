@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us — Life Pulse</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <style>
+    .contact-info-card {
+      background: var(--lp-card);
+      border: 1px solid var(--lp-border);
+      border-radius: var(--lp-radius);
+      padding: 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: all var(--lp-transition);
+    }
+    .contact-info-card:hover { transform: translateY(-2px); box-shadow: var(--lp-shadow-hover); }
+    .contact-icon-wrap {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .faq-item {
+      background: var(--lp-card);
+      border: 1px solid var(--lp-border);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+    .faq-question {
+      padding: 18px 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      font-size: 15px;
+      color: var(--lp-text);
+      user-select: none;
+      transition: background 0.2s;
+    }
+    .faq-question:hover { background: var(--lp-bg); }
+    .faq-answer {
+      padding: 0 20px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      font-size: 14px;
+      color: var(--lp-text-muted);
+      line-height: 1.7;
+    }
+    .faq-item.open .faq-answer { max-height: 200px; padding: 0 20px 18px; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); color: var(--lp-red); }
+    .faq-icon { transition: transform 0.3s ease; font-size: 18px; color: var(--lp-text-muted); }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg lp-navbar sticky-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="../index.html">
+      <div class="brand-icon"><i class="bi bi-heart-pulse-fill"></i></div>
+      <span class="brand-name">Life<span class="brand-accent">Pulse</span></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-center gap-1">
+        <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="blood-stock.html">Blood Stock</a></li>
+        <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
+        <li class="nav-item"><a class="nav-link" href="request.html">Request</a></li>
+        <li class="nav-item"><a class="nav-link emergency-link" href="emergency.html"><i class="bi bi-exclamation-triangle-fill me-1"></i>Emergency</a></li>
+        <li class="nav-item"><a class="nav-link active" href="contact.html">Contact</a></li>
+        <li class="nav-item"><button class="btn btn-sm btn-outline-secondary ms-2" id="darkToggle"><i class="bi bi-moon-fill"></i></button></li>
+        <li class="nav-item ms-2"><a class="btn lp-btn-primary" href="donate.html">Donate Now</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="container">
+    <h1><i class="bi bi-chat-heart-fill me-3" style="color:#FF6B6B"></i>Contact Us</h1>
+    <p>We're here to help — 24 hours a day, 7 days a week, 365 days a year</p>
+  </div>
+</section>
+
+<!-- CONTACT CARDS -->
+<section class="py-5" style="background:var(--lp-bg)">
+  <div class="container">
+    <div class="row g-4 mb-5">
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="0">
+        <div class="contact-info-card">
+          <div class="contact-icon-wrap" style="background:#fadbd8;color:#c0392b"><i class="bi bi-telephone-fill"></i></div>
+          <div>
+            <div style="font-weight:600;font-size:14px;color:var(--lp-text);margin-bottom:4px">Emergency Helpline</div>
+            <div style="font-size:15px;font-weight:700;color:var(--lp-red)">1800-LIFEPULSE</div>
+            <div style="font-size:12px;color:var(--lp-text-muted)">Toll-free · 24/7</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="80">
+        <div class="contact-info-card">
+          <div class="contact-icon-wrap" style="background:#d6eaf8;color:#2471a3"><i class="bi bi-envelope-fill"></i></div>
+          <div>
+            <div style="font-weight:600;font-size:14px;color:var(--lp-text);margin-bottom:4px">Email Us</div>
+            <div style="font-size:14px;font-weight:600;color:var(--lp-text)">help@lifepulse.in</div>
+            <div style="font-size:12px;color:var(--lp-text-muted)">Response within 4 hours</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="160">
+        <div class="contact-info-card">
+          <div class="contact-icon-wrap" style="background:#d5f5e3;color:#1e8449"><i class="bi bi-geo-alt-fill"></i></div>
+          <div>
+            <div style="font-weight:600;font-size:14px;color:var(--lp-text);margin-bottom:4px">Headquarters</div>
+            <div style="font-size:13px;color:var(--lp-text)">BKC, Mumbai — 400051</div>
+            <div style="font-size:12px;color:var(--lp-text-muted)">Mon–Sat 9AM–6PM</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="240">
+        <div class="contact-info-card">
+          <div class="contact-icon-wrap" style="background:#e8daef;color:#6c3483"><i class="bi bi-whatsapp"></i></div>
+          <div>
+            <div style="font-weight:600;font-size:14px;color:var(--lp-text);margin-bottom:4px">WhatsApp</div>
+            <div style="font-size:14px;font-weight:600;color:var(--lp-text)">+91 98765 43210</div>
+            <div style="font-size:12px;color:var(--lp-text-muted)">Chat support 8AM–10PM</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-5">
+      <!-- CONTACT FORM -->
+      <div class="col-lg-6" data-aos="fade-right">
+        <div class="form-card">
+          <h4 style="font-family:'Playfair Display',serif;margin-bottom:4px">Send Us a Message</h4>
+          <p class="text-muted mb-4" style="font-size:14px">Our team will respond within 4 business hours</p>
+          <form id="contactForm" novalidate>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Your Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" placeholder="Full name" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Mobile Number</label>
+                <input type="tel" class="form-control" placeholder="+91 XXXXXXXXXX"/>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Email Address <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" placeholder="your@email.com" required/>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Subject <span class="text-danger">*</span></label>
+                <select class="form-select" required>
+                  <option value="">Select a topic</option>
+                  <option>Blood Donation Enquiry</option>
+                  <option>Blood Request Help</option>
+                  <option>Hospital Partnership</option>
+                  <option>Technical Support</option>
+                  <option>Volunteer / Camp Organizer</option>
+                  <option>Media / Press</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Message <span class="text-danger">*</span></label>
+                <textarea class="form-control" rows="5" placeholder="Tell us how we can help you..." required></textarea>
+              </div>
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="newsletter"/>
+                  <label class="form-check-label" for="newsletter" style="font-size:14px">Subscribe to Life Pulse newsletters & health tips</label>
+                </div>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn-submit">
+                  <i class="bi bi-send-fill me-2"></i>Send Message
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- MAP + FAQ -->
+      <div class="col-lg-6" data-aos="fade-left">
+        <!-- MAP -->
+        <div style="border-radius:14px;overflow:hidden;height:260px;margin-bottom:24px;border:1px solid var(--lp-border)">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30154.0!2d72.8777!3d19.0760!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c6306644edc1%3A0x5da4ed8f8d648c69!2sBandra%20Kurla%20Complex%2C%20Mumbai!5e0!3m2!1sen!2sin!4v1"
+            width="100%" height="100%" style="border:0;" allowfullscreen loading="lazy"></iframe>
+        </div>
+
+        <!-- FAQ -->
+        <h5 style="font-family:'Playfair Display',serif;margin-bottom:16px">Frequently Asked Questions</h5>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">Who can donate blood?<i class="bi bi-plus-circle faq-icon"></i></div>
+          <div class="faq-answer">Anyone between 18–65 years of age, weighing at least 50 kg, and in good health can donate blood. You must wait at least 56 days between whole blood donations. People with certain medical conditions or on specific medications may be deferred.</div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">How long does donation take?<i class="bi bi-plus-circle faq-icon"></i></div>
+          <div class="faq-answer">The actual blood donation takes only 8–10 minutes. However, including registration, mini health check-up, donation, and refreshment break, the entire process takes about 45–60 minutes.</div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">Is blood donation safe?<i class="bi bi-plus-circle faq-icon"></i></div>
+          <div class="faq-answer">Yes, absolutely. All Life Pulse partner blood banks use sterile, single-use needles. The process is completely safe. Donors may feel mild fatigue or dizziness which passes quickly. Our trained staff monitor you throughout.</div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">How quickly can I get blood in an emergency?<i class="bi bi-plus-circle faq-icon"></i></div>
+          <div class="faq-answer">For critical emergencies, our SOS system dispatches alerts to nearby donors and hospitals within 60 seconds. The average response time for critical requests is under 3 minutes. For routine requests, we match within 2–4 hours.</div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">Is Life Pulse free to use?<i class="bi bi-plus-circle faq-icon"></i></div>
+          <div class="faq-answer">Yes! Life Pulse is completely free for all donors, patients, and their families. We are a non-profit initiative funded by government grants and CSR contributions from our hospital partners.</div>
+        </div>
+
+        <div class="faq-item" onclick="toggleFaq(this)">
+          <div class="faq-question">How is my data kept secure?<i class="bi bi-plus-circle faq-icon"></i></div>
+          <div class="faq-answer">We use AES-256 encryption for all stored data, JWT authentication for API access, and OTP verification for all critical actions. We are HIPAA compliant and never share personal data with third parties without explicit consent.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="lp-footer pt-5 pb-3">
+  <div class="container">
+    <div class="row g-4 mb-4">
+      <div class="col-lg-4">
+        <div class="footer-brand d-flex align-items-center gap-2 mb-3">
+          <div class="brand-icon small"><i class="bi bi-heart-pulse-fill"></i></div>
+          <span class="brand-name">Life<span class="brand-accent">Pulse</span></span>
+        </div>
+        <p class="footer-desc">India's most trusted blood bank management platform.</p>
+        <div class="footer-social d-flex gap-3 mt-3">
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-twitter-x"></i></a>
+          <a href="#"><i class="bi bi-instagram"></i></a>
+          <a href="#"><i class="bi bi-linkedin"></i></a>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <h6 class="footer-title">Quick Links</h6>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="blood-stock.html">Blood Stock</a></li>
+          <li><a href="donate.html">Donate Blood</a></li>
+          <li><a href="request.html">Request Blood</a></li>
+          <li><a href="emergency.html">Emergency</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <h6 class="footer-title">Emergency Helpline</h6>
+        <div class="footer-helpline">
+          <div class="helpline-item"><i class="bi bi-telephone-fill text-red"></i><span>+91 1800-LIFEPULSE (24/7)</span></div>
+          <div class="helpline-item"><i class="bi bi-envelope-fill text-red"></i><span>emergency@lifepulse.in</span></div>
+          <div class="helpline-item"><i class="bi bi-geo-alt-fill text-red"></i><span>BKC, Mumbai — 400051</span></div>
+        </div>
+      </div>
+    </div>
+    <hr class="footer-divider"/>
+    <p class="text-center mb-0" style="color:rgba(255,255,255,0.4);font-size:13px">&copy; 2025 Life Pulse. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/main.js"></script>
+<script>
+function toggleFaq(el) {
+  const isOpen = el.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(f => f.classList.remove('open'));
+  if (!isOpen) el.classList.add('open');
+}
+</script>
+</body>
+</html>
