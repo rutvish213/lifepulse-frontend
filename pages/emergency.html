@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Emergency — Life Pulse</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <style>
+    .emergency-hero {
+      background: linear-gradient(135deg, #7b0000 0%, #c0392b 50%, #1B2A4A 100%);
+      padding: 70px 0 50px;
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .emergency-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 50%, rgba(255,50,50,0.15) 0%, transparent 70%);
+      animation: emergencyPulse 2s ease-in-out infinite;
+    }
+    @keyframes emergencyPulse {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    .emergency-hero .container { position: relative; z-index: 1; }
+    .emergency-strip {
+      background: var(--lp-red);
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      animation: blink 1.5s step-end infinite;
+    }
+    @keyframes blink {
+      0%, 100% { background: var(--lp-red); }
+      50% { background: #a93226; }
+    }
+    .sos-section {
+      background: var(--lp-bg);
+      padding: 60px 0;
+    }
+    .sos-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+    .sos-ring {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .sos-ring::before, .sos-ring::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      border: 2px solid rgba(192,57,43,0.3);
+      animation: sosRing 2s ease-out infinite;
+    }
+    .sos-ring::before { width: 170px; height: 170px; }
+    .sos-ring::after { width: 200px; height: 200px; animation-delay: 0.5s; }
+    @keyframes sosRing {
+      0% { transform: scale(0.8); opacity: 1; }
+      100% { transform: scale(1.2); opacity: 0; }
+    }
+    .donor-result-card {
+      background: var(--lp-card);
+      border: 1px solid var(--lp-border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.25s ease;
+    }
+    .donor-result-card:hover {
+      box-shadow: var(--lp-shadow-hover);
+      border-color: var(--lp-red);
+    }
+    .donor-avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--lp-red), #e74c3c);
+      color: white;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 16px;
+      flex-shrink: 0;
+    }
+    .priority-badge {
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+    .priority-critical { background: #fadbd8; color: #a93226; }
+    .priority-urgent { background: #fdebd0; color: #ca6f1e; }
+    .priority-routine { background: #d5f5e3; color: #1e8449; }
+  </style>
+</head>
+<body>
+
+<!-- EMERGENCY STRIP -->
+<div class="emergency-strip">
+  <i class="bi bi-exclamation-triangle-fill me-2"></i>
+  EMERGENCY HELPLINE: 1800-LIFEPULSE (Toll Free · 24/7 · Multilingual)
+  <i class="bi bi-exclamation-triangle-fill ms-2"></i>
+</div>
+
+<nav class="navbar navbar-expand-lg lp-navbar sticky-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="../index.html">
+      <div class="brand-icon"><i class="bi bi-heart-pulse-fill"></i></div>
+      <span class="brand-name">Life<span class="brand-accent">Pulse</span></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-center gap-1">
+        <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="blood-stock.html">Blood Stock</a></li>
+        <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
+        <li class="nav-item"><a class="nav-link" href="request.html">Request</a></li>
+        <li class="nav-item"><a class="nav-link active emergency-link" href="emergency.html"><i class="bi bi-exclamation-triangle-fill me-1"></i>Emergency</a></li>
+        <li class="nav-item"><button class="btn btn-sm btn-outline-secondary ms-2" id="darkToggle"><i class="bi bi-moon-fill"></i></button></li>
+        <li class="nav-item ms-2"><a class="btn lp-btn-primary" href="donate.html">Donate Now</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- EMERGENCY HERO -->
+<section class="emergency-hero">
+  <div class="container">
+    <h1 style="font-family:'Playfair Display',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;">
+      <i class="bi bi-exclamation-triangle-fill me-3" style="color:#FF6B6B"></i>Emergency Blood Help
+    </h1>
+    <p style="color:rgba(255,255,255,0.75);font-size:16px;margin-top:8px">
+      Press SOS to instantly alert nearby donors & hospitals. Average response: <strong style="color:#FF6B6B">under 3 minutes.</strong>
+    </p>
+  </div>
+</section>
+
+<!-- SOS + QUICK ACTIONS -->
+<section class="sos-section">
+  <div class="container">
+    <div class="row g-5 align-items-start">
+
+      <!-- SOS BUTTON -->
+      <div class="col-lg-4 text-center">
+        <div class="sos-wrapper">
+          <h5 style="font-weight:700;color:var(--lp-text)">Press for Instant Help</h5>
+          <div class="sos-ring">
+            <button class="sos-btn" id="sosBtn">
+              <i class="bi bi-broadcast" style="font-size:2rem"></i>
+              <span style="font-size:13px;font-weight:700;letter-spacing:1px">SOS</span>
+            </button>
+          </div>
+          <p class="text-muted" style="font-size:13px;max-width:240px">
+            Alerts 18+ nearby donors & 4 hospitals simultaneously using your location
+          </p>
+          <div style="background:var(--lp-red-light);border:1px solid var(--lp-red);border-radius:12px;padding:16px;width:100%">
+            <div style="font-size:22px;font-weight:700;color:var(--lp-red)">1800-LIFEPULSE</div>
+            <div style="font-size:12px;color:var(--lp-text-muted);margin-top:4px">Toll-free · 24/7 · Available in 12 languages</div>
+            <a href="tel:1800543378753" class="btn lp-btn-primary w-100 mt-3">
+              <i class="bi bi-telephone-fill me-2"></i>Call Now
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- EMERGENCY FORM -->
+      <div class="col-lg-5">
+        <div class="form-card">
+          <h5 style="font-family:'Playfair Display',serif;margin-bottom:4px">Emergency Blood Request</h5>
+          <p class="text-muted mb-4" style="font-size:13px">Priority processing — response within 30 minutes guaranteed</p>
+          <form id="emergencyForm">
+            <div class="row g-3">
+              <div class="col-12">
+                <label class="form-label">Patient Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" placeholder="Full name" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Blood Group <span class="text-danger">*</span></label>
+                <select class="form-select" required>
+                  <option value="">Select</option>
+                  <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+                  <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Units Needed <span class="text-danger">*</span></label>
+                <input type="number" class="form-control" placeholder="1–10" min="1" max="10" required/>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Hospital Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" placeholder="Hospital where blood is needed" required/>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Contact Number <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control" placeholder="+91 XXXXXXXXXX" required/>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Priority Level</label>
+                <div class="d-flex gap-2 flex-wrap">
+                  <label style="cursor:pointer;display:flex;align-items:center;gap:8px;padding:8px 14px;border:1.5px solid var(--lp-border);border-radius:10px;font-size:13px;transition:all 0.2s">
+                    <input type="radio" name="priority" value="critical" checked style="accent-color:var(--lp-red)"/> 
+                    <span style="color:#a93226;font-weight:600">Critical (&lt;3 hrs)</span>
+                  </label>
+                  <label style="cursor:pointer;display:flex;align-items:center;gap:8px;padding:8px 14px;border:1.5px solid var(--lp-border);border-radius:10px;font-size:13px;transition:all 0.2s">
+                    <input type="radio" name="priority" value="urgent" style="accent-color:orange"/> 
+                    <span style="color:#ca6f1e;font-weight:600">Urgent (&lt;12 hrs)</span>
+                  </label>
+                </div>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn-submit" style="background:var(--lp-red)" onclick="this.form.dispatchEvent(new Event('submit',{cancelable:true,bubbles:true}))">
+                  <i class="bi bi-send-fill me-2"></i>Send Emergency Request
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- NEARBY DONORS -->
+      <div class="col-lg-3">
+        <h6 style="font-weight:700;margin-bottom:16px;color:var(--lp-text)">
+          <i class="bi bi-geo-alt-fill text-danger me-2"></i>Nearest Available Donors
+        </h6>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div class="donor-result-card">
+            <div class="donor-avatar">RS</div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:14px;font-weight:600;color:var(--lp-text)">Rahul S.</div>
+              <div style="font-size:12px;color:var(--lp-text-muted)">O+ · 1.2 km away</div>
+            </div>
+            <span class="priority-badge priority-critical">Available</span>
+          </div>
+          <div class="donor-result-card">
+            <div class="donor-avatar" style="background:linear-gradient(135deg,#2471a3,#3498db)">PK</div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:14px;font-weight:600;color:var(--lp-text)">Priya K.</div>
+              <div style="font-size:12px;color:var(--lp-text-muted)">O- · 2.4 km away</div>
+            </div>
+            <span class="priority-badge priority-critical">Available</span>
+          </div>
+          <div class="donor-result-card">
+            <div class="donor-avatar" style="background:linear-gradient(135deg,#1e8449,#27ae60)">AM</div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:14px;font-weight:600;color:var(--lp-text)">Amit M.</div>
+              <div style="font-size:12px;color:var(--lp-text-muted)">AB+ · 3.1 km away</div>
+            </div>
+            <span class="priority-badge priority-urgent">Busy</span>
+          </div>
+          <div class="donor-result-card">
+            <div class="donor-avatar" style="background:linear-gradient(135deg,#6c3483,#8e44ad)">SV</div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:14px;font-weight:600;color:var(--lp-text)">Seema V.</div>
+              <div style="font-size:12px;color:var(--lp-text-muted)">B+ · 4.5 km away</div>
+            </div>
+            <span class="priority-badge priority-critical">Available</span>
+          </div>
+          <div class="donor-result-card">
+            <div class="donor-avatar" style="background:linear-gradient(135deg,#ca6f1e,#e67e22)">DT</div>
+            <div style="flex:1;min-width:0">
+              <div style="font-size:14px;font-weight:600;color:var(--lp-text)">Dev T.</div>
+              <div style="font-size:12px;color:var(--lp-text-muted)">A+ · 5.8 km away</div>
+            </div>
+            <span class="priority-badge priority-critical">Available</span>
+          </div>
+        </div>
+        <button class="btn lp-btn-outline w-100 mt-3" style="font-size:13px">
+          <i class="bi bi-search me-2"></i>Find More Donors
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PRIORITY REQUESTS -->
+<section class="py-5" style="background:var(--lp-card)">
+  <div class="container">
+    <h5 style="font-family:'Playfair Display',serif;margin-bottom:20px">
+      <i class="bi bi-activity text-danger me-2"></i>Active Emergency Requests
+    </h5>
+    <div class="row g-3">
+      <div class="col-md-6 col-lg-4">
+        <div style="background:var(--lp-bg);border:1.5px solid #e74c3c;border-radius:12px;padding:16px;">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <span class="priority-badge priority-critical">CRITICAL</span>
+            <span style="font-size:11px;color:var(--lp-text-muted)">2 min ago</span>
+          </div>
+          <div style="font-size:1.4rem;font-weight:700;color:var(--lp-red);font-family:'Playfair Display',serif">O−</div>
+          <div style="font-size:14px;font-weight:600;color:var(--lp-text);margin:4px 0">2 units needed</div>
+          <div style="font-size:13px;color:var(--lp-text-muted)"><i class="bi bi-hospital me-1"></i>KEM Hospital, Mumbai</div>
+          <button class="btn lp-btn-primary w-100 mt-3 btn-sm">I Can Help</button>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div style="background:var(--lp-bg);border:1.5px solid #f39c12;border-radius:12px;padding:16px;">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <span class="priority-badge priority-urgent">URGENT</span>
+            <span style="font-size:11px;color:var(--lp-text-muted)">15 min ago</span>
+          </div>
+          <div style="font-size:1.4rem;font-weight:700;color:var(--lp-red);font-family:'Playfair Display',serif">B−</div>
+          <div style="font-size:14px;font-weight:600;color:var(--lp-text);margin:4px 0">3 units needed</div>
+          <div style="font-size:13px;color:var(--lp-text-muted)"><i class="bi bi-hospital me-1"></i>Apollo Hospital, Delhi</div>
+          <button class="btn lp-btn-primary w-100 mt-3 btn-sm">I Can Help</button>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4">
+        <div style="background:var(--lp-bg);border:1.5px solid #e74c3c;border-radius:12px;padding:16px;">
+          <div class="d-flex justify-content-between align-items-start mb-2">
+            <span class="priority-badge priority-critical">CRITICAL</span>
+            <span style="font-size:11px;color:var(--lp-text-muted)">28 min ago</span>
+          </div>
+          <div style="font-size:1.4rem;font-weight:700;color:var(--lp-red);font-family:'Playfair Display',serif">AB−</div>
+          <div style="font-size:14px;font-weight:600;color:var(--lp-text);margin:4px 0">1 unit needed</div>
+          <div style="font-size:13px;color:var(--lp-text-muted)"><i class="bi bi-hospital me-1"></i>Fortis, Bangalore</div>
+          <button class="btn lp-btn-primary w-100 mt-3 btn-sm">I Can Help</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="lp-footer py-3 text-center">
+  <p class="mb-0" style="color:rgba(255,255,255,0.4);font-size:13px">&copy; 2025 Life Pulse — Every Second Counts</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/main.js"></script>
+<script>
+  const ef = document.getElementById('emergencyForm');
+  if(ef) {
+    ef.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = ef.querySelector('button[type=submit]');
+      btn.innerHTML = '<i class="bi bi-broadcast me-2"></i>Sending Alerts...';
+      btn.disabled = true;
+      setTimeout(() => {
+        const div = document.createElement('div');
+        div.className = 'alert alert-success mt-4';
+        div.innerHTML = '🚨 <strong>Emergency request sent!</strong> Alerts dispatched to 18 donors and 4 hospitals near you. You will receive an SMS within 3 minutes.';
+        ef.after(div);
+        ef.style.display = 'none';
+      }, 2000);
+    });
+  }
+</script>
+</body>
+</html>
