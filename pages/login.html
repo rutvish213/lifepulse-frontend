@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login — Life Pulse</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <style>
+    body { background: var(--lp-bg); }
+    .login-page {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--lp-navy) 0%, #1a3a6e 50%, #8B0000 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .login-page::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(192,57,43,0.12) 0%, transparent 60%);
+    }
+    .login-card {
+      background: var(--lp-card);
+      border-radius: 20px;
+      padding: 40px 36px;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+      width: 100%;
+      max-width: 460px;
+      position: relative;
+      z-index: 1;
+    }
+    .role-tabs {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      background: var(--lp-bg);
+      border-radius: 12px;
+      padding: 5px;
+      margin-bottom: 24px;
+    }
+    .role-tab {
+      background: transparent;
+      border: none;
+      padding: 8px 4px;
+      border-radius: 9px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--lp-text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .role-tab.active { background: var(--lp-card); color: var(--lp-red); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .role-tab i { display: block; font-size: 18px; margin-bottom: 3px; }
+    .main-tabs {
+      display: flex;
+      background: var(--lp-bg);
+      border-radius: 12px;
+      padding: 4px;
+      gap: 4px;
+      margin-bottom: 24px;
+    }
+    .main-tab {
+      flex: 1;
+      background: transparent;
+      border: none;
+      padding: 10px;
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--lp-text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .main-tab.active { background: var(--lp-card); color: var(--lp-text); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+    .divider-text {
+      text-align: center;
+      position: relative;
+      margin: 20px 0;
+    }
+    .divider-text::before {
+      content: '';
+      position: absolute; top: 50%; left: 0; right: 0;
+      height: 1px;
+      background: var(--lp-border);
+    }
+    .divider-text span {
+      background: var(--lp-card);
+      padding: 0 12px;
+      position: relative;
+      font-size: 13px;
+      color: var(--lp-text-muted);
+    }
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px;
+      border: 1.5px solid var(--lp-border);
+      border-radius: 10px;
+      background: var(--lp-bg);
+      color: var(--lp-text);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+      text-decoration: none;
+    }
+    .social-btn:hover { border-color: var(--lp-red); color: var(--lp-text); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .password-wrapper { position: relative; }
+    .password-toggle {
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+      background: none; border: none;
+      color: var(--lp-text-muted); cursor: pointer; padding: 0; font-size: 16px;
+    }
+    .otp-inputs { display: flex; gap: 10px; }
+    .otp-input {
+      flex: 1; text-align: center;
+      padding: 12px 0;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border: 1.5px solid var(--lp-border);
+      border-radius: 10px;
+      background: var(--lp-bg);
+      color: var(--lp-text);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .otp-input:focus { border-color: var(--lp-red); }
+  </style>
+</head>
+<body>
+
+<div class="login-page">
+  <!-- FLOATING BRAND -->
+  <a href="../index.html" style="position:fixed;top:16px;left:24px;display:flex;align-items:center;gap:8px;text-decoration:none;z-index:10">
+    <div class="brand-icon"><i class="bi bi-heart-pulse-fill"></i></div>
+    <span class="brand-name" style="color:white">Life<span class="brand-accent">Pulse</span></span>
+  </a>
+
+  <!-- DARK TOGGLE -->
+  <button id="darkToggle" style="position:fixed;top:16px;right:24px;z-index:10;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;border-radius:8px;padding:8px 12px;cursor:pointer">
+    <i class="bi bi-moon-fill"></i>
+  </button>
+
+  <div class="login-card">
+    <!-- MAIN TABS: Login / Register -->
+    <div class="main-tabs">
+      <button class="main-tab active" onclick="switchMainTab('login', this)">
+        <i class="bi bi-box-arrow-in-right me-2"></i>Login
+      </button>
+      <button class="main-tab" onclick="switchMainTab('register', this)">
+        <i class="bi bi-person-plus-fill me-2"></i>Create Account
+      </button>
+    </div>
+
+    <!-- ROLE SELECTOR -->
+    <div class="role-tabs" id="roleTabs">
+      <button class="role-tab active" onclick="switchRole('donor', this)">
+        <i class="bi bi-droplet-fill"></i>Donor
+      </button>
+      <button class="role-tab" onclick="switchRole('patient', this)">
+        <i class="bi bi-heart-pulse-fill"></i>Patient
+      </button>
+      <button class="role-tab" onclick="switchRole('hospital', this)">
+        <i class="bi bi-hospital-fill"></i>Hospital
+      </button>
+      <button class="role-tab" onclick="switchRole('admin', this)">
+        <i class="bi bi-shield-fill"></i>Admin
+      </button>
+    </div>
+
+    <!-- LOGIN PANE -->
+    <div id="loginPane">
+      <h5 id="loginTitle" style="font-family:'Playfair Display',serif;font-weight:700;margin-bottom:4px">Donor Login</h5>
+      <p class="text-muted mb-4" style="font-size:13px">Welcome back! Enter your credentials to continue.</p>
+
+      <form id="loginForm">
+        <div class="mb-3">
+          <label class="form-label">Email Address</label>
+          <input type="email" class="form-control" id="loginEmail" placeholder="your@email.com" required/>
+        </div>
+        <div class="mb-3">
+          <label class="form-label d-flex justify-content-between">
+            Password
+            <a href="#" style="color:var(--lp-red);font-size:13px" onclick="showForgotPassword(event)">Forgot password?</a>
+          </label>
+          <div class="password-wrapper">
+            <input type="password" class="form-control" id="loginPassword" placeholder="Enter your password" required/>
+            <button type="button" class="password-toggle" onclick="togglePassword('loginPassword', this)">
+              <i class="bi bi-eye"></i>
+            </button>
+          </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="rememberMe"/>
+            <label class="form-check-label" for="rememberMe" style="font-size:13px">Remember me</label>
+          </div>
+        </div>
+        <button type="submit" class="btn-submit">
+          <i class="bi bi-box-arrow-in-right me-2"></i>Login
+        </button>
+      </form>
+
+      <div class="divider-text mt-4"><span>or continue with</span></div>
+      <div class="d-flex gap-3">
+        <a href="#" class="social-btn"><i class="bi bi-google" style="color:#EA4335"></i>Google</a>
+        <a href="#" class="social-btn"><i class="bi bi-facebook" style="color:#1877F2"></i>Facebook</a>
+      </div>
+    </div>
+
+    <!-- REGISTER PANE -->
+    <div id="registerPane" style="display:none">
+      <h5 id="registerTitle" style="font-family:'Playfair Display',serif;font-weight:700;margin-bottom:4px">Create Donor Account</h5>
+      <p class="text-muted mb-4" style="font-size:13px">Join Life Pulse and start saving lives today.</p>
+
+      <form id="registerForm" novalidate>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Full Name <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" placeholder="Your full name" required/>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Mobile Number <span class="text-danger">*</span></label>
+            <input type="tel" class="form-control" placeholder="+91 XXXXXXXXXX" required/>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Email Address <span class="text-danger">*</span></label>
+            <input type="email" class="form-control" placeholder="your@email.com" required/>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Blood Group <span class="text-danger">*</span></label>
+            <select class="form-select" required id="regBloodGroup">
+              <option value="">Select</option>
+              <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+              <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">City <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" placeholder="Your city" required/>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Password <span class="text-danger">*</span></label>
+            <div class="password-wrapper">
+              <input type="password" class="form-control" id="regPassword" placeholder="Min. 8 characters" minlength="8" required/>
+              <button type="button" class="password-toggle" onclick="togglePassword('regPassword', this)"><i class="bi bi-eye"></i></button>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="termsCheck" required/>
+              <label class="form-check-label" for="termsCheck" style="font-size:13px">
+                I agree to Life Pulse's <a href="#" style="color:var(--lp-red)">Terms of Service</a> and <a href="#" style="color:var(--lp-red)">Privacy Policy</a>
+              </label>
+            </div>
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn-submit" style="background:var(--lp-navy)">
+              <i class="bi bi-person-check-fill me-2"></i>Create Account
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- OTP PANE (hidden) -->
+    <div id="otpPane" style="display:none">
+      <div class="text-center mb-4">
+        <div style="width:64px;height:64px;background:#d5f5e3;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;color:#1e8449">
+          <i class="bi bi-phone-fill"></i>
+        </div>
+        <h5 style="font-family:'Playfair Display',serif;font-weight:700">OTP Verification</h5>
+        <p class="text-muted" style="font-size:13px">Enter the 6-digit OTP sent to your mobile number</p>
+      </div>
+      <div class="otp-inputs mb-4">
+        <input type="text" class="otp-input" maxlength="1" oninput="otpNext(this,0)"/>
+        <input type="text" class="otp-input" maxlength="1" oninput="otpNext(this,1)"/>
+        <input type="text" class="otp-input" maxlength="1" oninput="otpNext(this,2)"/>
+        <input type="text" class="otp-input" maxlength="1" oninput="otpNext(this,3)"/>
+        <input type="text" class="otp-input" maxlength="1" oninput="otpNext(this,4)"/>
+        <input type="text" class="otp-input" maxlength="1" oninput="otpNext(this,5)"/>
+      </div>
+      <button class="btn-submit" onclick="verifyOtp()">
+        <i class="bi bi-check-circle-fill me-2"></i>Verify OTP
+      </button>
+      <div class="text-center mt-3">
+        <span style="font-size:13px;color:var(--lp-text-muted)">Didn't receive? </span>
+        <a href="#" style="color:var(--lp-red);font-size:13px;font-weight:600">Resend OTP</a>
+      </div>
+    </div>
+
+    <!-- FORGOT PASSWORD PANE (hidden) -->
+    <div id="forgotPane" style="display:none">
+      <div class="text-center mb-4">
+        <div style="width:64px;height:64px;background:#fadbd8;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:28px;color:var(--lp-red)">
+          <i class="bi bi-lock-fill"></i>
+        </div>
+        <h5 style="font-family:'Playfair Display',serif;font-weight:700">Reset Password</h5>
+        <p class="text-muted" style="font-size:13px">Enter your registered email to receive a reset link</p>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-control" placeholder="your@email.com"/>
+      </div>
+      <button class="btn-submit" onclick="sendResetLink()">
+        <i class="bi bi-envelope-fill me-2"></i>Send Reset Link
+      </button>
+      <div class="text-center mt-3">
+        <a href="#" style="color:var(--lp-red);font-size:13px;font-weight:600" onclick="showLogin(event)">
+          <i class="bi bi-arrow-left me-1"></i>Back to Login
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/main.js"></script>
+<script>
+let currentRole = 'donor';
+
+const roleNames = { donor: 'Donor', patient: 'Patient', hospital: 'Hospital', admin: 'Admin' };
+
+function switchMainTab(tab, btn) {
+  document.querySelectorAll('.main-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('loginPane').style.display = tab === 'login' ? 'block' : 'none';
+  document.getElementById('registerPane').style.display = tab === 'register' ? 'block' : 'none';
+  document.getElementById('otpPane').style.display = 'none';
+  document.getElementById('forgotPane').style.display = 'none';
+  // Hide blood group for hospital/admin register
+  const bgField = document.getElementById('regBloodGroup');
+  if(bgField) bgField.closest('.col-md-6').style.display = (tab === 'register' && (currentRole === 'hospital' || currentRole === 'admin')) ? 'none' : '';
+}
+
+function switchRole(role, btn) {
+  currentRole = role;
+  document.querySelectorAll('.role-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const name = roleNames[role];
+  const loginTitle = document.getElementById('loginTitle');
+  const registerTitle = document.getElementById('registerTitle');
+  if(loginTitle) loginTitle.textContent = name + ' Login';
+  if(registerTitle) registerTitle.textContent = 'Create ' + name + ' Account';
+  if(role === 'admin') {
+    document.querySelectorAll('.main-tab')[1].style.display = 'none';
+  } else {
+    document.querySelectorAll('.main-tab')[1].style.display = '';
+  }
+}
+
+function togglePassword(id, btn) {
+  const inp = document.getElementById(id);
+  if(inp.type === 'password') { inp.type = 'text'; btn.querySelector('i').className = 'bi bi-eye-slash'; }
+  else { inp.type = 'password'; btn.querySelector('i').className = 'bi bi-eye'; }
+}
+
+function showForgotPassword(e) {
+  e.preventDefault();
+  document.getElementById('loginPane').style.display = 'none';
+  document.getElementById('forgotPane').style.display = 'block';
+}
+
+function showLogin(e) {
+  if(e) e.preventDefault();
+  document.getElementById('forgotPane').style.display = 'none';
+  document.getElementById('loginPane').style.display = 'block';
+}
+
+function sendResetLink() {
+  const btn = event.target;
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  setTimeout(() => {
+    btn.closest('.login-card').innerHTML = `
+      <div class="text-center py-4">
+        <div style="font-size:64px;color:#1e8449">✓</div>
+        <h5 style="font-family:'Playfair Display',serif;margin:16px 0 8px">Reset Link Sent!</h5>
+        <p class="text-muted" style="font-size:14px">Check your email inbox for the password reset link. It expires in 30 minutes.</p>
+        <a href="login.html" class="btn lp-btn-primary mt-3">Back to Login</a>
+      </div>`;
+  }, 1500);
+}
+
+function otpNext(inp, idx) {
+  if(inp.value.length === 1) {
+    const inputs = document.querySelectorAll('.otp-input');
+    if(idx < 5) inputs[idx+1].focus();
+    else verifyOtp();
+  }
+}
+
+function verifyOtp() {
+  const inputs = [...document.querySelectorAll('.otp-input')];
+  const otp = inputs.map(i => i.value).join('');
+  if(otp.length < 6) { alert('Please enter all 6 digits'); return; }
+  // Simulate verification
+  document.getElementById('otpPane').innerHTML = `
+    <div class="text-center py-4">
+      <div style="font-size:64px;color:#1e8449">✓</div>
+      <h5 style="font-family:'Playfair Display',serif;margin:16px 0 8px">Verified!</h5>
+      <p class="text-muted" style="font-size:14px">Account created successfully. Redirecting to dashboard...</p>
+    </div>`;
+  setTimeout(() => window.location.href = 'dashboard.html', 2000);
+}
+
+// Login form submission
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const btn = this.querySelector('button[type=submit]');
+  btn.innerHTML = '<i class="bi bi-hourglass-split me-2"></i>Logging in...';
+  btn.disabled = true;
+  setTimeout(() => {
+    localStorage.setItem('lp-user', JSON.stringify({
+      email: document.getElementById('loginEmail').value,
+      role: currentRole,
+      name: 'Demo User'
+    }));
+    if(currentRole === 'admin') window.location.href = 'dashboard.html';
+    else window.location.href = '../index.html';
+  }, 1500);
+});
+
+// Register form submission — show OTP
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  if(!this.checkValidity()) { this.classList.add('was-validated'); return; }
+  document.getElementById('registerPane').style.display = 'none';
+  document.getElementById('otpPane').style.display = 'block';
+  document.querySelectorAll('.main-tab').forEach(b => b.classList.remove('active'));
+});
+</script>
+</body>
+</html>
