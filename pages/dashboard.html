@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard — Life Pulse</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <style>
+    body { background: var(--lp-bg); overflow-x: hidden; }
+    .sidebar {
+      width: 240px;
+      min-height: 100vh;
+      background: var(--lp-navy);
+      position: fixed; top: 0; left: 0;
+      z-index: 200;
+      display: flex; flex-direction: column;
+      transition: transform 0.3s ease;
+    }
+    [data-theme="dark"] .sidebar { background: #080f1a; }
+    .sidebar-logo {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .sidebar-section {
+      padding: 16px 12px 8px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase;
+    }
+    .sidebar-link {
+      display: flex; align-items: center; gap: 10px;
+      padding: 11px 16px;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      font-size: 14px; font-weight: 500;
+      border-radius: 10px;
+      margin: 2px 8px;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .sidebar-link:hover { background: rgba(255,255,255,0.08); color: white; }
+    .sidebar-link.active { background: var(--lp-red); color: white; }
+    .sidebar-link i { font-size: 17px; width: 20px; flex-shrink: 0; }
+    .sidebar-link .badge-count {
+      margin-left: auto;
+      background: rgba(255,255,255,0.15);
+      color: white;
+      border-radius: 50px;
+      padding: 1px 8px;
+      font-size: 11px;
+    }
+    .sidebar-link.active .badge-count { background: rgba(255,255,255,0.25); }
+
+    .main-content {
+      margin-left: 240px;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      background: var(--lp-card);
+      border-bottom: 1px solid var(--lp-border);
+      padding: 12px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+
+    .dash-card {
+      background: var(--lp-card);
+      border: 1px solid var(--lp-border);
+      border-radius: 14px;
+      padding: 22px;
+      transition: all 0.25s ease;
+    }
+    .dash-card:hover { transform: translateY(-3px); box-shadow: var(--lp-shadow-hover); }
+
+    .dash-metric {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--lp-text);
+      line-height: 1;
+    }
+
+    .dash-label { font-size: 13px; color: var(--lp-text-muted); margin-top: 6px; }
+    .dash-change { font-size: 12px; font-weight: 600; margin-top: 8px; }
+    .change-up { color: #1e8449; }
+    .change-down { color: #a93226; }
+
+    .mini-chart { display: block; margin-top: 12px; }
+
+    .activity-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--lp-border);
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    .data-table { width: 100%; border-collapse: collapse; }
+    .data-table th {
+      padding: 12px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--lp-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border-bottom: 2px solid var(--lp-border);
+      text-align: left;
+    }
+    .data-table td {
+      padding: 12px 14px;
+      font-size: 14px;
+      color: var(--lp-text);
+      border-bottom: 1px solid var(--lp-border);
+    }
+    .data-table tr:hover td { background: var(--lp-bg); }
+    .data-table tr:last-child td { border-bottom: none; }
+
+    .quick-action {
+      background: var(--lp-bg);
+      border: 1px solid var(--lp-border);
+      border-radius: 12px;
+      padding: 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+      text-decoration: none;
+    }
+    .quick-action:hover { border-color: var(--lp-red); transform: translateY(-2px); }
+    .quick-action i { font-size: 24px; margin-bottom: 8px; display: block; }
+    .quick-action span { font-size: 13px; font-weight: 600; color: var(--lp-text); }
+
+    @media(max-width:991px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .main-content { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <div class="brand-icon" style="width:32px;height:32px;font-size:14px;"><i class="bi bi-heart-pulse-fill"></i></div>
+    <div>
+      <div style="color:white;font-weight:700;font-size:14px;">Life<span style="color:#ff8a80">Pulse</span></div>
+      <div style="color:rgba(255,255,255,0.4);font-size:11px;">Admin Panel</div>
+    </div>
+  </div>
+
+  <div style="flex:1;overflow-y:auto;padding-bottom:16px;">
+    <div class="sidebar-section">Main</div>
+    <a class="sidebar-link active" onclick="showSection('overview', this)">
+      <i class="bi bi-grid-fill"></i>Overview
+    </a>
+    <a class="sidebar-link" onclick="showSection('donors', this)">
+      <i class="bi bi-people-fill"></i>Donors
+      <span class="badge-count">12.4k</span>
+    </a>
+    <a class="sidebar-link" onclick="showSection('requests', this)">
+      <i class="bi bi-clipboard2-pulse-fill"></i>Blood Requests
+      <span class="badge-count">38</span>
+    </a>
+    <a class="sidebar-link" onclick="showSection('stock', this)">
+      <i class="bi bi-droplet-half"></i>Blood Stock
+    </a>
+
+    <div class="sidebar-section">Management</div>
+    <a class="sidebar-link" onclick="showSection('hospitals', this)">
+      <i class="bi bi-hospital-fill"></i>Hospitals
+      <span class="badge-count">180</span>
+    </a>
+    <a class="sidebar-link" onclick="showSection('camps', this)">
+      <i class="bi bi-calendar-event-fill"></i>Camps
+      <span class="badge-count">12</span>
+    </a>
+    <a class="sidebar-link" onclick="showSection('alerts', this)">
+      <i class="bi bi-bell-fill"></i>Alerts
+      <span class="badge-count" style="background:var(--lp-red);">3</span>
+    </a>
+
+    <div class="sidebar-section">Analytics</div>
+    <a class="sidebar-link" onclick="showSection('analytics', this)">
+      <i class="bi bi-bar-chart-fill"></i>Analytics
+    </a>
+    <a class="sidebar-link" onclick="showSection('reports', this)">
+      <i class="bi bi-file-earmark-bar-graph-fill"></i>Reports
+    </a>
+
+    <div class="sidebar-section">System</div>
+    <a class="sidebar-link" href="security.html">
+      <i class="bi bi-shield-fill-check"></i>Security
+    </a>
+    <a class="sidebar-link" href="../index.html">
+      <i class="bi bi-box-arrow-left"></i>Back to Site
+    </a>
+  </div>
+
+  <div style="padding:16px;border-top:1px solid rgba(255,255,255,0.08);">
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="width:36px;height:36px;background:var(--lp-red);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0">AD</div>
+      <div>
+        <div style="color:white;font-size:13px;font-weight:600">Admin User</div>
+        <div style="color:rgba(255,255,255,0.4);font-size:11px">admin@lifepulse.in</div>
+      </div>
+      <a href="login.html" style="color:rgba(255,255,255,0.4);margin-left:auto;font-size:16px;" title="Logout"><i class="bi bi-box-arrow-right"></i></a>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="d-flex align-items-center gap-3">
+      <button class="btn btn-sm btn-outline-secondary d-lg-none" onclick="document.getElementById('sidebar').classList.toggle('open')">
+        <i class="bi bi-list"></i>
+      </button>
+      <div>
+        <div style="font-weight:700;font-size:15px;color:var(--lp-text)" id="pageTitle">Overview</div>
+        <div style="font-size:12px;color:var(--lp-text-muted)" id="pageDate">Today — June 17, 2025</div>
+      </div>
+    </div>
+    <div class="d-flex align-items-center gap-3">
+      <div style="position:relative">
+        <button class="btn btn-sm btn-outline-secondary" style="border-radius:10px">
+          <i class="bi bi-bell-fill"></i>
+        </button>
+        <span class="notif-badge">3</span>
+      </div>
+      <button class="btn btn-sm btn-outline-secondary" id="darkToggle" style="border-radius:10px"><i class="bi bi-moon-fill"></i></button>
+      <a href="../pages/emergency.html" class="btn lp-btn-primary btn-sm">
+        <i class="bi bi-exclamation-triangle-fill me-1"></i>Emergency
+      </a>
+    </div>
+  </div>
+
+  <div class="p-4">
+
+    <!-- ===== OVERVIEW SECTION ===== -->
+    <div id="section-overview">
+      <!-- STAT CARDS -->
+      <div class="row g-4 mb-4">
+        <div class="col-6 col-xl-3">
+          <div class="dash-card">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <div class="dash-label">Total Donors</div>
+                <div class="dash-metric">12,400</div>
+                <div class="dash-change change-up"><i class="bi bi-arrow-up me-1"></i>+284 this month</div>
+              </div>
+              <div style="width:44px;height:44px;background:#fadbd8;border-radius:12px;display:flex;align-items:center;justify-content:center;color:var(--lp-red);font-size:20px;">
+                <i class="bi bi-people-fill"></i>
+              </div>
+            </div>
+            <canvas class="mini-chart" width="200" height="40" data-values="[80,92,78,110,95,105,120,115,130,140]" data-color="#c0392b"></canvas>
+          </div>
+        </div>
+        <div class="col-6 col-xl-3">
+          <div class="dash-card">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <div class="dash-label">Blood Units Available</div>
+                <div class="dash-metric">8,750</div>
+                <div class="dash-change change-down"><i class="bi bi-arrow-down me-1"></i>-120 since yesterday</div>
+              </div>
+              <div style="width:44px;height:44px;background:#d6eaf8;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#2471a3;font-size:20px;">
+                <i class="bi bi-droplet-half"></i>
+              </div>
+            </div>
+            <canvas class="mini-chart" width="200" height="40" data-values="[900,870,920,880,840,870,850,830,880,875]" data-color="#2471a3"></canvas>
+          </div>
+        </div>
+        <div class="col-6 col-xl-3">
+          <div class="dash-card">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <div class="dash-label">Partner Hospitals</div>
+                <div class="dash-metric">180</div>
+                <div class="dash-change change-up"><i class="bi bi-arrow-up me-1"></i>+3 new this week</div>
+              </div>
+              <div style="width:44px;height:44px;background:#d5f5e3;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#1e8449;font-size:20px;">
+                <i class="bi bi-hospital-fill"></i>
+              </div>
+            </div>
+            <canvas class="mini-chart" width="200" height="40" data-values="[160,163,165,168,170,172,175,177,178,180]" data-color="#27ae60"></canvas>
+          </div>
+        </div>
+        <div class="col-6 col-xl-3">
+          <div class="dash-card">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <div class="dash-label">Pending Requests</div>
+                <div class="dash-metric">38</div>
+                <div class="dash-change change-down"><i class="bi bi-arrow-up me-1"></i>+7 urgent today</div>
+              </div>
+              <div style="width:44px;height:44px;background:#fadbd8;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#c0392b;font-size:20px;">
+                <i class="bi bi-clipboard2-pulse-fill"></i>
+              </div>
+            </div>
+            <canvas class="mini-chart" width="200" height="40" data-values="[30,35,28,40,32,38,42,36,39,38]" data-color="#e74c3c"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUICK ACTIONS -->
+      <div class="dash-card mb-4">
+        <div style="font-weight:700;font-size:15px;color:var(--lp-text);margin-bottom:16px">Quick Actions</div>
+        <div class="row g-3">
+          <div class="col-6 col-md-3">
+            <a href="donate.html" class="quick-action">
+              <i class="bi bi-person-plus-fill" style="color:var(--lp-red)"></i>
+              <span>Add Donor</span>
+            </a>
+          </div>
+          <div class="col-6 col-md-3">
+            <a href="blood-stock.html" class="quick-action">
+              <i class="bi bi-droplet-fill" style="color:#2471a3"></i>
+              <span>Update Stock</span>
+            </a>
+          </div>
+          <div class="col-6 col-md-3">
+            <a href="camps.html" class="quick-action">
+              <i class="bi bi-calendar-plus-fill" style="color:#1e8449"></i>
+              <span>Create Camp</span>
+            </a>
+          </div>
+          <div class="col-6 col-md-3">
+            <a href="emergency.html" class="quick-action">
+              <i class="bi bi-exclamation-triangle-fill" style="color:#e67e22"></i>
+              <span>Emergency Alert</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <!-- RECENT REQUESTS -->
+        <div class="col-lg-7">
+          <div class="dash-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div style="font-weight:700;font-size:15px;color:var(--lp-text)">Recent Blood Requests</div>
+              <a href="#" style="font-size:13px;color:var(--lp-red);text-decoration:none;font-weight:600">View All</a>
+            </div>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Patient</th>
+                  <th>Blood</th>
+                  <th>Hospital</th>
+                  <th>Priority</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Rajesh S.<br/><small class="text-muted">2 min ago</small></td>
+                  <td><strong style="color:var(--lp-red);font-family:'Playfair Display',serif">O−</strong></td>
+                  <td style="font-size:13px">KEM Hospital, Mumbai</td>
+                  <td><span class="blood-status status-critical">Critical</span></td>
+                  <td><button class="btn btn-sm lp-btn-primary" onclick="this.textContent='Assigned ✓';this.disabled=true">Assign</button></td>
+                </tr>
+                <tr>
+                  <td>Priya M.<br/><small class="text-muted">18 min ago</small></td>
+                  <td><strong style="color:var(--lp-red);font-family:'Playfair Display',serif">B−</strong></td>
+                  <td style="font-size:13px">Apollo Delhi</td>
+                  <td><span class="blood-status status-low">Urgent</span></td>
+                  <td><button class="btn btn-sm lp-btn-primary" onclick="this.textContent='Assigned ✓';this.disabled=true">Assign</button></td>
+                </tr>
+                <tr>
+                  <td>Amit K.<br/><small class="text-muted">1 hr ago</small></td>
+                  <td><strong style="color:var(--lp-red);font-family:'Playfair Display',serif">AB+</strong></td>
+                  <td style="font-size:13px">Manipal Bangalore</td>
+                  <td><span class="blood-status status-high">Routine</span></td>
+                  <td><button class="btn btn-sm lp-btn-primary" onclick="this.textContent='Assigned ✓';this.disabled=true">Assign</button></td>
+                </tr>
+                <tr>
+                  <td>Sunita R.<br/><small class="text-muted">3 hr ago</small></td>
+                  <td><strong style="color:var(--lp-red);font-family:'Playfair Display',serif">A−</strong></td>
+                  <td style="font-size:13px">Civil Ahmedabad</td>
+                  <td><span class="blood-status status-low">Urgent</span></td>
+                  <td><button class="btn btn-sm lp-btn-primary" onclick="this.textContent='Assigned ✓';this.disabled=true">Assign</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ACTIVITY + STOCK -->
+        <div class="col-lg-5">
+          <div class="dash-card mb-4">
+            <div style="font-weight:700;font-size:15px;color:var(--lp-text);margin-bottom:16px">Critical Stock Levels</div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                  <span style="font-size:14px;font-weight:600;color:var(--lp-text)">O−</span>
+                  <span style="font-size:12px;color:#a93226;font-weight:600">5 units — Critical</span>
+                </div>
+                <div class="stock-progress"><div class="stock-progress-fill fill-red" data-width="4" style="width:4%"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                  <span style="font-size:14px;font-weight:600;color:var(--lp-text)">B−</span>
+                  <span style="font-size:12px;color:#a93226;font-weight:600">7 units — Critical</span>
+                </div>
+                <div class="stock-progress"><div class="stock-progress-fill fill-red" data-width="9" style="width:9%"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                  <span style="font-size:14px;font-weight:600;color:var(--lp-text)">A−</span>
+                  <span style="font-size:12px;color:#b7770d;font-weight:600">18 units — Low</span>
+                </div>
+                <div class="stock-progress"><div class="stock-progress-fill fill-yellow" data-width="18" style="width:18%"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                  <span style="font-size:14px;font-weight:600;color:var(--lp-text)">AB−</span>
+                  <span style="font-size:12px;color:#b7770d;font-weight:600">12 units — Low</span>
+                </div>
+                <div class="stock-progress"><div class="stock-progress-fill fill-yellow" data-width="20" style="width:20%"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                  <span style="font-size:14px;font-weight:600;color:var(--lp-text)">O+</span>
+                  <span style="font-size:12px;color:#1e8449;font-weight:600">210 units — Good</span>
+                </div>
+                <div class="stock-progress"><div class="stock-progress-fill fill-green" data-width="70" style="width:70%"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dash-card">
+            <div style="font-weight:700;font-size:15px;color:var(--lp-text);margin-bottom:16px">Recent Activity</div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:#27ae60"></div>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--lp-text)">New donor registered</div>
+                <div style="font-size:12px;color:var(--lp-text-muted)">Pooja Verma — O+ — Mumbai</div>
+                <div style="font-size:11px;color:var(--lp-text-muted)">3 minutes ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:var(--lp-red)"></div>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--lp-text)">Emergency SOS triggered</div>
+                <div style="font-size:12px;color:var(--lp-text-muted)">O− needed at KEM Hospital</div>
+                <div style="font-size:11px;color:var(--lp-text-muted)">12 minutes ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:#2471a3"></div>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--lp-text)">Stock updated</div>
+                <div style="font-size:12px;color:var(--lp-text-muted)">Manipal Hospital added 40 A+ units</div>
+                <div style="font-size:11px;color:var(--lp-text-muted)">1 hour ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot" style="background:#e67e22"></div>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--lp-text)">Camp registration opened</div>
+                <div style="font-size:12px;color:var(--lp-text-muted)">Mumbai Mega Drive — 200 slots</div>
+                <div style="font-size:11px;color:var(--lp-text-muted)">2 hours ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OTHER SECTIONS (shown on sidebar click) -->
+    <div id="section-donors" style="display:none">
+      <div class="dash-card">
+        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+          <h5 style="font-family:'Playfair Display',serif;margin:0">Manage Donors</h5>
+          <div class="d-flex gap-2">
+            <input type="text" class="form-control form-control-sm" placeholder="Search donors..." style="width:200px"/>
+            <button class="btn lp-btn-primary btn-sm"><i class="bi bi-plus me-1"></i>Add Donor</button>
+          </div>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Name</th><th>Blood Group</th><th>City</th><th>Last Donated</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>Rahul Sharma</td><td style="color:var(--lp-red);font-weight:700">O+</td><td>Mumbai</td><td>12 Apr 2025</td><td><span class="blood-status status-high">Eligible</span></td><td><button class="btn btn-sm lp-btn-outline">View</button></td></tr>
+            <tr><td>Priya Krishnan</td><td style="color:var(--lp-red);font-weight:700">A+</td><td>Bangalore</td><td>28 Mar 2025</td><td><span class="blood-status status-high">Eligible</span></td><td><button class="btn btn-sm lp-btn-outline">View</button></td></tr>
+            <tr><td>Amit Patel</td><td style="color:var(--lp-red);font-weight:700">B−</td><td>Ahmedabad</td><td>02 Jun 2025</td><td><span class="blood-status status-low">Cooling</span></td><td><button class="btn btn-sm lp-btn-outline">View</button></td></tr>
+            <tr><td>Sneha Rao</td><td style="color:var(--lp-red);font-weight:700">AB+</td><td>Chennai</td><td>Never</td><td><span class="blood-status status-high">New</span></td><td><button class="btn btn-sm lp-btn-outline">View</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="section-requests" style="display:none">
+      <div class="dash-card">
+        <h5 style="font-family:'Playfair Display',serif;margin-bottom:20px">Manage Blood Requests</h5>
+        <table class="data-table">
+          <thead><tr><th>#</th><th>Patient</th><th>Blood</th><th>Units</th><th>Hospital</th><th>Priority</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>#1082</td><td>Rajesh S.</td><td style="color:var(--lp-red);font-weight:700">O−</td><td>2</td><td>KEM Mumbai</td><td><span class="blood-status status-critical">Critical</span></td><td><span class="blood-status" style="background:#d6eaf8;color:#2471a3">Pending</span></td><td><button class="btn btn-sm lp-btn-primary" onclick="this.textContent='Fulfilled';this.className='btn btn-sm btn-success'">Fulfill</button></td></tr>
+            <tr><td>#1081</td><td>Priya M.</td><td style="color:var(--lp-red);font-weight:700">B−</td><td>3</td><td>Apollo Delhi</td><td><span class="blood-status status-low">Urgent</span></td><td><span class="blood-status" style="background:#d6eaf8;color:#2471a3">Pending</span></td><td><button class="btn btn-sm lp-btn-primary" onclick="this.textContent='Fulfilled';this.className='btn btn-sm btn-success'">Fulfill</button></td></tr>
+            <tr><td>#1080</td><td>Ravi T.</td><td style="color:var(--lp-red);font-weight:700">A+</td><td>1</td><td>Manipal BLR</td><td><span class="blood-status status-high">Routine</span></td><td><span class="blood-status status-high">Fulfilled</span></td><td><button class="btn btn-sm btn-outline-secondary" disabled>Done</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="section-stock" style="display:none">
+      <div class="dash-card">
+        <h5 style="font-family:'Playfair Display',serif;margin-bottom:20px">Blood Stock Management</h5>
+        <div class="row g-3">
+          <div class="col-md-3 col-6" id="stock-editor">
+          </div>
+        </div>
+        <script>
+          const groups = ['A+','A-','B+','B-','AB+','AB-','O+','O-'];
+          const units  = [142,18,98,7,64,12,210,5];
+          const statuses = ['available','low','available','critical','available','low','available','critical'];
+          const el = document.getElementById('stock-editor');
+          if(el) {
+            el.parentElement.innerHTML = groups.map((g,i)=>`
+              <div class="col-md-3 col-6">
+                <div class="blood-group-card ${statuses[i]}">
+                  <div class="blood-type">${g.replace('+','<sup>+</sup>').replace('-','<sup>-</sup>')}</div>
+                  <div style="margin:10px 0">
+                    <input type="number" class="form-control form-control-sm text-center" value="${units[i]}" min="0" style="font-weight:700;font-size:1rem"/>
+                  </div>
+                  <div class="blood-status ${statuses[i]==='available'?'status-high':statuses[i]==='low'?'status-low':'status-critical'}">${statuses[i].charAt(0).toUpperCase()+statuses[i].slice(1)}</div>
+                </div>
+              </div>`).join('');
+          }
+        </script>
+        <div class="mt-4">
+          <button class="btn lp-btn-primary" onclick="this.textContent='✓ Saved!';setTimeout(()=>this.textContent='Save All Changes',2000)"><i class="bi bi-save me-2"></i>Save All Changes</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="section-hospitals" style="display:none">
+      <div class="dash-card">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h5 style="font-family:'Playfair Display',serif;margin:0">Manage Hospitals</h5>
+          <button class="btn lp-btn-primary btn-sm"><i class="bi bi-plus me-1"></i>Add Hospital</button>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Hospital</th><th>City</th><th>Type</th><th>Blood Bank</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>AIIMS Mumbai</td><td>Mumbai</td><td>Government</td><td><i class="bi bi-check-circle-fill text-success"></i> 24/7</td><td><span class="blood-status status-high">Active</span></td><td><button class="btn btn-sm lp-btn-outline">Edit</button></td></tr>
+            <tr><td>Apollo Delhi</td><td>Delhi</td><td>Private</td><td><i class="bi bi-check-circle-fill text-success"></i> 24/7</td><td><span class="blood-status status-high">Active</span></td><td><button class="btn btn-sm lp-btn-outline">Edit</button></td></tr>
+            <tr><td>Civil Ahmedabad</td><td>Ahmedabad</td><td>Government</td><td><i class="bi bi-check-circle-fill text-success"></i> 24/7</td><td><span class="blood-status status-high">Active</span></td><td><button class="btn btn-sm lp-btn-outline">Edit</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="section-camps" style="display:none">
+      <div class="dash-card">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h5 style="font-family:'Playfair Display',serif;margin:0">Manage Blood Camps</h5>
+          <button class="btn lp-btn-primary btn-sm" onclick="document.getElementById('newCampForm').style.display='block'"><i class="bi bi-plus me-1"></i>Create Camp</button>
+        </div>
+        <div id="newCampForm" style="display:none;background:var(--lp-bg);border-radius:12px;padding:20px;margin-bottom:20px">
+          <div class="row g-3">
+            <div class="col-md-4"><input type="text" class="form-control" placeholder="Camp Name"/></div>
+            <div class="col-md-3"><input type="date" class="form-control"/></div>
+            <div class="col-md-3"><input type="text" class="form-control" placeholder="Location"/></div>
+            <div class="col-md-2"><button class="btn lp-btn-primary w-100" onclick="this.closest('#newCampForm').style.display='none'">Save</button></div>
+          </div>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Camp Name</th><th>Date</th><th>Location</th><th>Registrations</th><th>Status</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td>Mumbai Mega Drive</td><td>19 Jun 2025</td><td>BKC, Mumbai</td><td>72/200</td><td><span class="blood-status status-high">Active</span></td><td><button class="btn btn-sm lp-btn-outline">Edit</button></td></tr>
+            <tr><td>NSS Life Camp Pune</td><td>22 Jun 2025</td><td>Fergusson, Pune</td><td>48/100</td><td><span class="blood-status status-high">Active</span></td><td><button class="btn btn-sm lp-btn-outline">Edit</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="section-analytics" style="display:none">
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="dash-card">
+            <h5 style="font-family:'Playfair Display',serif;margin-bottom:20px">Monthly Donations</h5>
+            <div style="display:flex;align-items:flex-end;gap:8px;height:160px;padding-top:20px">
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px">
+                <span style="font-size:11px;color:var(--lp-text-muted)">820</span>
+                <div style="width:100%;background:var(--lp-red);border-radius:4px 4px 0 0;height:82%"></div>
+                <span style="font-size:10px;color:var(--lp-text-muted)">Jan</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px">
+                <span style="font-size:11px;color:var(--lp-text-muted)">940</span>
+                <div style="width:100%;background:var(--lp-red);border-radius:4px 4px 0 0;height:94%;opacity:0.9"></div>
+                <span style="font-size:10px;color:var(--lp-text-muted)">Feb</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px">
+                <span style="font-size:11px;color:var(--lp-text-muted)">780</span>
+                <div style="width:100%;background:var(--lp-red);border-radius:4px 4px 0 0;height:78%;opacity:0.8"></div>
+                <span style="font-size:10px;color:var(--lp-text-muted)">Mar</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px">
+                <span style="font-size:11px;color:var(--lp-text-muted)">1020</span>
+                <div style="width:100%;background:var(--lp-red);border-radius:4px 4px 0 0;height:100%"></div>
+                <span style="font-size:10px;color:var(--lp-text-muted)">Apr</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px">
+                <span style="font-size:11px;color:var(--lp-text-muted)">890</span>
+                <div style="width:100%;background:var(--lp-red);border-radius:4px 4px 0 0;height:87%;opacity:0.85"></div>
+                <span style="font-size:10px;color:var(--lp-text-muted)">May</span>
+              </div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative">
+                <span style="font-size:11px;color:var(--lp-text-muted)">760</span>
+                <div style="width:100%;background:var(--lp-red);border-radius:4px 4px 0 0;height:74%;opacity:0.7;border:2px dashed rgba(192,57,43,0.5)"></div>
+                <span style="font-size:10px;color:var(--lp-text-muted)">Jun</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="dash-card">
+            <h5 style="font-family:'Playfair Display',serif;margin-bottom:20px">Blood Group Distribution</h5>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;align-items:center;gap:10px">
+                <span style="width:32px;font-weight:700;color:var(--lp-red);font-size:13px">O+</span>
+                <div style="flex:1;height:20px;background:var(--lp-border);border-radius:4px;overflow:hidden">
+                  <div style="width:35%;height:100%;background:var(--lp-red);border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px">
+                    <span style="color:white;font-size:11px;font-weight:700">35%</span>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <span style="width:32px;font-weight:700;color:var(--lp-red);font-size:13px">A+</span>
+                <div style="flex:1;height:20px;background:var(--lp-border);border-radius:4px;overflow:hidden">
+                  <div style="width:28%;height:100%;background:#2471a3;border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px">
+                    <span style="color:white;font-size:11px;font-weight:700">28%</span>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <span style="width:32px;font-weight:700;color:var(--lp-red);font-size:13px">B+</span>
+                <div style="flex:1;height:20px;background:var(--lp-border);border-radius:4px;overflow:hidden">
+                  <div style="width:20%;height:100%;background:#27ae60;border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px">
+                    <span style="color:white;font-size:11px;font-weight:700">20%</span>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <span style="width:32px;font-weight:700;color:var(--lp-red);font-size:13px">AB+</span>
+                <div style="flex:1;height:20px;background:var(--lp-border);border-radius:4px;overflow:hidden">
+                  <div style="width:9%;height:100%;background:#e67e22;border-radius:4px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px">
+                    <span style="color:white;font-size:11px;font-weight:700">9%</span>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px">
+                <span style="width:32px;font-weight:700;color:var(--lp-red);font-size:13px">O−</span>
+                <div style="flex:1;height:20px;background:var(--lp-border);border-radius:4px;overflow:hidden">
+                  <div style="width:5%;height:100%;background:#6c3483;border-radius:4px"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="section-alerts" style="display:none">
+      <div class="dash-card">
+        <h5 style="font-family:'Playfair Display',serif;margin-bottom:20px">System Alerts</h5>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="background:#fadbd8;border:1px solid #e74c3c;border-radius:12px;padding:16px;display:flex;gap:12px;align-items:flex-start">
+            <i class="bi bi-exclamation-triangle-fill" style="color:#c0392b;font-size:20px;flex-shrink:0;margin-top:2px"></i>
+            <div>
+              <div style="font-weight:700;color:#7b0000;font-size:14px">Critical: O− Stock Near Zero</div>
+              <div style="font-size:13px;color:#a93226;margin-top:4px">Only 5 units remaining. Emergency donor alert recommended immediately.</div>
+              <div style="margin-top:10px;display:flex;gap:8px">
+                <button class="btn btn-sm lp-btn-primary" onclick="this.textContent='Alert Sent ✓';this.disabled=true">Send Donor Alert</button>
+                <button class="btn btn-sm lp-btn-outline">Dismiss</button>
+              </div>
+            </div>
+          </div>
+          <div style="background:#fef9e7;border:1px solid #f39c12;border-radius:12px;padding:16px;display:flex;gap:12px;align-items:flex-start">
+            <i class="bi bi-exclamation-circle-fill" style="color:#ca6f1e;font-size:20px;flex-shrink:0;margin-top:2px"></i>
+            <div>
+              <div style="font-weight:700;color:#7d4e00;font-size:14px">Warning: B− Stock Low</div>
+              <div style="font-size:13px;color:#ca6f1e;margin-top:4px">7 units remaining. Consider requesting B− donations in Delhi NCR region.</div>
+              <button class="btn btn-sm lp-btn-outline mt-3">Schedule Camp</button>
+            </div>
+          </div>
+          <div style="background:#d5f5e3;border:1px solid #27ae60;border-radius:12px;padding:16px;display:flex;gap:12px;align-items:flex-start">
+            <i class="bi bi-info-circle-fill" style="color:#1e8449;font-size:20px;flex-shrink:0;margin-top:2px"></i>
+            <div>
+              <div style="font-weight:700;color:#145a32;font-size:14px">Info: 3 New Hospitals Applied for Partnership</div>
+              <div style="font-size:13px;color:#1e8449;margin-top:4px">Applications from Apollo Pune, ESIC Mumbai, and Fortis Noida awaiting approval.</div>
+              <button class="btn btn-sm lp-btn-primary mt-3" onclick="this.textContent='Approved ✓';this.disabled=true">Review Applications</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="section-reports" style="display:none">
+      <div class="dash-card">
+        <h5 style="font-family:'Playfair Display',serif;margin-bottom:20px">Generate Reports</h5>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <select class="form-select mb-3">
+              <option>Monthly Donor Report</option>
+              <option>Blood Stock Summary</option>
+              <option>Hospital Activity Report</option>
+              <option>Emergency Response Report</option>
+              <option>Camp Registration Report</option>
+            </select>
+            <div class="row g-2 mb-3">
+              <div class="col-6"><input type="date" class="form-control" placeholder="From"/></div>
+              <div class="col-6"><input type="date" class="form-control" placeholder="To"/></div>
+            </div>
+            <button class="btn lp-btn-primary w-100" onclick="this.textContent='⬇ Generating...';setTimeout(()=>this.textContent='⬇ Download PDF',2000)">
+              <i class="bi bi-file-earmark-pdf me-2"></i>Download PDF Report
+            </button>
+            <button class="btn lp-btn-outline w-100 mt-2">
+              <i class="bi bi-file-earmark-excel me-2"></i>Download Excel
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/main.js"></script>
+<script>
+function showSection(name, linkEl) {
+  document.querySelectorAll('[id^="section-"]').forEach(s => s.style.display = 'none');
+  const section = document.getElementById('section-' + name);
+  if(section) section.style.display = '';
+  document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+  if(linkEl) linkEl.classList.add('active');
+  const names = {overview:'Overview',donors:'Manage Donors',requests:'Blood Requests',stock:'Blood Stock',hospitals:'Hospitals',camps:'Blood Camps',analytics:'Analytics',reports:'Reports',alerts:'Alerts'};
+  const titleEl = document.getElementById('pageTitle');
+  if(titleEl) titleEl.textContent = names[name] || name;
+}
+
+// Draw mini charts
+document.querySelectorAll('.mini-chart').forEach(canvas => {
+  const ctx = canvas.getContext('2d');
+  const data = JSON.parse(canvas.getAttribute('data-values'));
+  const color = canvas.getAttribute('data-color') || '#c0392b';
+  const w = canvas.width, h = canvas.height;
+  const max = Math.max(...data);
+  const min = Math.min(...data);
+  const range = max - min || 1;
+  ctx.clearRect(0,0,w,h);
+  // Fill area
+  const gradient = ctx.createLinearGradient(0,0,0,h);
+  gradient.addColorStop(0, color + '30');
+  gradient.addColorStop(1, color + '05');
+  ctx.beginPath();
+  data.forEach((v,i) => {
+    const x = (i/(data.length-1))*w;
+    const y = h - ((v-min)/range)*(h-4)-2;
+    i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  });
+  ctx.lineTo(w,h); ctx.lineTo(0,h); ctx.closePath();
+  ctx.fillStyle = gradient; ctx.fill();
+  // Line
+  ctx.beginPath();
+  data.forEach((v,i) => {
+    const x = (i/(data.length-1))*w;
+    const y = h - ((v-min)/range)*(h-4)-2;
+    i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  });
+  ctx.strokeStyle = color; ctx.lineWidth = 2;
+  ctx.stroke();
+});
+</script>
+</body>
+</html>
