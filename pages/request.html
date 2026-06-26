@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Request Blood — Life Pulse</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg lp-navbar sticky-top" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="../index.html">
+      <div class="brand-icon"><i class="bi bi-heart-pulse-fill"></i></div>
+      <span class="brand-name">Life<span class="brand-accent">Pulse</span></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"><span class="navbar-toggler-icon"></span></button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto align-items-center gap-1">
+        <li class="nav-item"><a class="nav-link" href="../index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="donate.html">Donate</a></li>
+        <li class="nav-item"><a class="nav-link active" href="request.html">Request</a></li>
+        <li class="nav-item"><a class="nav-link emergency-link" href="emergency.html"><i class="bi bi-exclamation-triangle-fill me-1"></i>Emergency</a></li>
+        <li class="nav-item"><button class="btn btn-sm btn-outline-secondary ms-2" id="darkToggle"><i class="bi bi-moon-fill"></i></button></li>
+        <li class="nav-item ms-2"><a class="btn lp-btn-outline" href="login.html">Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="container">
+    <h1><i class="bi bi-clipboard2-pulse-fill me-3" style="color:#FF6B6B"></i>Request Blood</h1>
+    <p>Submit your blood requirement and we'll match you with available donors and hospitals instantly.</p>
+  </div>
+</section>
+
+<section class="py-5" style="background:var(--lp-bg)">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-8">
+        <div class="form-card">
+          <h4 class="mb-1" style="font-family:'Playfair Display',serif">Blood Request Form</h4>
+          <p class="text-muted mb-4" style="font-size:14px">All requests are processed immediately and matched within minutes</p>
+          <form id="requestForm" novalidate>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label class="form-label">Patient Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" placeholder="Full name of patient" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Patient Age <span class="text-danger">*</span></label>
+                <input type="number" class="form-control" placeholder="Age in years" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Blood Group Required <span class="text-danger">*</span></label>
+                <select class="form-select" required>
+                  <option value="">Select blood group</option>
+                  <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
+                  <option>AB+</option><option>AB-</option><option>O+</option><option>O-</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Units Required <span class="text-danger">*</span></label>
+                <input type="number" class="form-control" placeholder="Number of units" min="1" max="10" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Hospital Name <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" placeholder="Name of hospital" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">City <span class="text-danger">*</span></label>
+                <select class="form-select" required>
+                  <option value="">Select city</option>
+                  <option>Mumbai</option><option>Delhi</option><option>Bangalore</option>
+                  <option>Ahmedabad</option><option>Chennai</option><option>Kolkata</option>
+                  <option>Pune</option><option>Hyderabad</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Required By Date <span class="text-danger">*</span></label>
+                <input type="date" class="form-control" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Emergency Level <span class="text-danger">*</span></label>
+                <select class="form-select" id="emergencyLevel" required>
+                  <option value="">Select level</option>
+                  <option value="routine">Routine (24–48 hrs)</option>
+                  <option value="urgent">Urgent (within 12 hrs)</option>
+                  <option value="critical">Critical (within 3 hrs)</option>
+                </select>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Attending Doctor's Name</label>
+                <input type="text" class="form-control" placeholder="Dr. Name (optional)"/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Contact Mobile <span class="text-danger">*</span></label>
+                <input type="tel" class="form-control" placeholder="+91 XXXXXXXXXX" required/>
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Upload Medical Prescription</label>
+                <input type="file" class="form-control" accept=".pdf,.jpg,.jpeg,.png"/>
+                <small class="text-muted">PDF, JPG, PNG — Max 5MB</small>
+              </div>
+              <div class="col-12">
+                <label class="form-label">Additional Notes</label>
+                <textarea class="form-control" rows="2" placeholder="Any specific requirements or medical history..."></textarea>
+              </div>
+              <div class="col-12">
+                <div class="alert alert-info d-flex gap-2 align-items-start" style="font-size:14px;border-radius:10px;">
+                  <i class="bi bi-info-circle-fill mt-1"></i>
+                  <div>Critical requests trigger immediate SMS alerts to all matching donors within 10km radius and all partner hospitals in your city.</div>
+                </div>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn-submit" style="background:var(--lp-navy)">
+                  <i class="bi bi-send-fill me-2"></i>Submit Blood Request
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="form-card mb-4">
+          <h6 style="font-weight:600;margin-bottom:16px"><i class="bi bi-lightning-charge-fill text-warning me-2"></i>How It Works</h6>
+          <div style="display:flex;flex-direction:column;gap:16px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:28px;height:28px;background:var(--lp-red);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;">1</div>
+              <div><div style="font-size:14px;font-weight:600;color:var(--lp-text)">Submit Request</div><div style="font-size:13px;color:var(--lp-text-muted)">Fill in patient and blood details</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:28px;height:28px;background:var(--lp-red);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;">2</div>
+              <div><div style="font-size:14px;font-weight:600;color:var(--lp-text)">Instant Matching</div><div style="font-size:13px;color:var(--lp-text-muted)">AI finds donors within 2 minutes</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:28px;height:28px;background:var(--lp-red);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;">3</div>
+              <div><div style="font-size:14px;font-weight:600;color:var(--lp-text)">Alerts Sent</div><div style="font-size:13px;color:var(--lp-text-muted)">SMS to donors + hospitals notified</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div style="width:28px;height:28px;background:var(--lp-red);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;">4</div>
+              <div><div style="font-size:14px;font-weight:600;color:var(--lp-text)">Blood Arranged</div><div style="font-size:13px;color:var(--lp-text-muted)">Track status via SMS updates</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="form-card" style="background:var(--lp-red-light);border-color:var(--lp-red);">
+          <h6 style="color:var(--lp-red);font-weight:700;margin-bottom:8px"><i class="bi bi-telephone-fill me-2"></i>Emergency Helpline</h6>
+          <p style="font-size:1.3rem;font-weight:700;color:var(--lp-red);margin:0">1800-LIFEPULSE</p>
+          <p style="font-size:13px;color:var(--lp-text-muted);margin:4px 0 0">Toll-free | Available 24/7 | Multilingual support</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="lp-footer py-3 text-center">
+  <p class="mb-0" style="color:rgba(255,255,255,0.4);font-size:13px">&copy; 2025 Life Pulse</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>
